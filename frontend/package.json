@@ -9,6 +9,7 @@
     "preview": "vite preview",
     "test.e2e": "cypress run",
     "test.unit": "vitest",
+    "android": "ionic capacitor run android -l --external",
     "lint": "eslint"
   },
   "dependencies": {
@@ -18,8 +19,11 @@
     "@capacitor/haptics": "6.0.0",
     "@capacitor/keyboard": "6.0.0",
     "@capacitor/status-bar": "^6.0.0",
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
     "@ionic/react": "^8.0.0",
     "@ionic/react-router": "^8.0.0",
+    "@mui/material": "^5.15.19",
     "@types/react-router": "^5.1.20",
     "@types/react-router-dom": "^5.3.3",
     "ionicons": "^7.0.0",
