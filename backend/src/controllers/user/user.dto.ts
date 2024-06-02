@@ -9,7 +9,7 @@ import {
 } from 'class-validator';
 import { plainToClass } from 'class-transformer';
 
-export class CreateUser {
+export class CreateUserDto {
   @ApiProperty({
     description: 'Nome do usuário',
   })
@@ -54,7 +54,29 @@ export class CreateUser {
   }
 
   async validate() {
-    await validate(plainToClass(CreateUser, this));
+    await validate(plainToClass(CreateUserDto, this));
     await this.validatePasswordConfirmation();
   }
+}
+
+export class UserLoginDto {
+  @ApiProperty({
+    description: 'Email do usuário',
+  })
+  @IsString()
+  @IsEmail()
+  @IsNotEmpty()
+  email: string;
+
+  @ApiProperty({
+    description: 'Senha do usuário',
+  })
+  @IsString()
+  @IsNotEmpty()
+  password: string;
+}
+
+export class UserLoginResponseDto {
+  @ApiProperty({ example: 'generated-jwt-token' })
+  token: string;
 }

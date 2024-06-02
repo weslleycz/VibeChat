@@ -24,12 +24,19 @@ let UserController = class UserController {
     async create(data) {
         return this.userService.create(data);
     }
+    async login(data) {
+        return this.userService.login(data);
+    }
 };
 exports.UserController = UserController;
 __decorate([
     (0, common_1.Post)(),
     (0, swagger_1.ApiOperation)({ summary: 'Criar um novo usuário' }),
-    (0, swagger_1.ApiResponse)({ status: 200, description: 'Usuário criado com sucesso.' }),
+    (0, swagger_1.ApiResponse)({
+        status: 200,
+        description: 'Usuário criado com sucesso.',
+        type: user_dto_1.UserLoginResponseDto,
+    }),
     (0, swagger_1.ApiResponse)({
         status: 400,
         description: 'Usuário já possui cadastro.',
@@ -40,9 +47,23 @@ __decorate([
     }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [user_dto_1.CreateUser]),
+    __metadata("design:paramtypes", [user_dto_1.CreateUserDto]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "create", null);
+__decorate([
+    (0, common_1.Post)('/login'),
+    (0, swagger_1.ApiOperation)({ summary: 'Realizar login do usuário' }),
+    (0, swagger_1.ApiResponse)({
+        status: 200,
+        description: 'Login realizado com sucesso.',
+        type: user_dto_1.UserLoginResponseDto,
+    }),
+    (0, swagger_1.ApiResponse)({ status: 401, description: 'Usuário ou senha inválidos.' }),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [user_dto_1.UserLoginDto]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "login", null);
 exports.UserController = UserController = __decorate([
     (0, common_1.Controller)('user'),
     (0, swagger_1.ApiTags)('User'),

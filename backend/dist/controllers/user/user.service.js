@@ -20,18 +20,18 @@ let UserService = class UserService {
         this.bcryptService = bcryptService;
         this.jwtservice = jwtservice;
     }
-    async create(data) {
+    async create({ email, name, password }) {
         const existUser = await this.prismaService.user.findUnique({
             where: {
-                email: data.email,
+                email: email,
             },
         });
         if (existUser === null) {
-            const hashPassword = await this.bcryptService.hashPassword(data.password);
+            const hashPassword = await this.bcryptService.hashPassword(password);
             const user = await this.prismaService.user.create({
                 data: {
-                    email: data.email,
-                    name: data.name,
+                    email: email,
+                    name: name,
                     password: hashPassword,
                 },
             });
@@ -39,6 +39,22 @@ let UserService = class UserService {
         }
         else {
             throw new common_1.HttpException('Usuário já possui cadastro.', 409);
+        }
+    }
+    async login({ email, password }) {
+        const user = await this.prismaService.user.findUnique({
+            where: { email },
+        });
+        if (user === null) {
+            throw new common_1.HttpException('Usuário ou senha inválidos', 401);
+        }
+        else {
+            if (await this.bcryptService.comparePasswords(password, user.password)) {
+                return this.jwtservice.login(user.id);
+            }
+            else {
+                throw new common_1.HttpException('Usuário ou senha inválidos', 401);
+            }
         }
     }
 };

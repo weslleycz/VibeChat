@@ -1,12 +1,11 @@
-import axios from "axios";
+import axios, { AxiosAdapter } from "axios";
 import { Cookies } from "./cookies";
-
 const api = axios.create({
   baseURL: process.env.API_Url,
 });
 
 api.interceptors.request.use(
-  async (config:any) => {
+  async (config: any) => {
     const { get, remove } = new Cookies();
     const token = await get();
     if (token) {

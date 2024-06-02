@@ -1,7 +1,8 @@
-import { CreateUser } from './user.dto';
+import { CreateUserDto, UserLoginDto } from './user.dto';
 import { UserService } from './user.service';
 export declare class UserController {
     private readonly userService;
     constructor(userService: UserService);
-    create(data: CreateUser): Promise<object>;
+    create(data: CreateUserDto): Promise<object>;
+    login(data: UserLoginDto): Promise<object>;
 }

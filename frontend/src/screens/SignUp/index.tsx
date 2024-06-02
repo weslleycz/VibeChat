@@ -17,12 +17,15 @@ import styles from "./styles.module.scss";
 import { isEmail } from "validator";
 import { api } from "../../services/api";
 import { Cookies } from "../../services/cookies";
+import { useHistory } from "react-router-dom";
 
 export const SignUp = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirme, setPasswordConfirme] = useState("");
+
+  const history = useHistory();
 
   const [errors, setErrors] = useState({
     name: false,
@@ -81,6 +84,7 @@ export const SignUp = () => {
       const { set } = new Cookies();
       const expirationDate = new Date();
       expirationDate.setTime(expirationDate.getTime() + 72 * 60 * 60 * 1000);
+      setServerError("");
       const res = await api.post("/user", {
         name: name,
         email: email,
@@ -88,6 +92,7 @@ export const SignUp = () => {
         confirmPassword: passwordConfirme,
       });
       await set(res.data.token, expirationDate);
+      history.push("/chat");
     } catch (error: any) {
       setServerError(error.response.data.message);
     }
@@ -244,7 +249,7 @@ export const SignUp = () => {
                         size="large"
                         sx={{ mt: 3, mb: 2 }}
                       >
-                        Entrar
+                        Cadastre-se
                       </Button>
                       <Button
                         fullWidth
@@ -390,6 +395,9 @@ export const SignUp = () => {
                     value={passwordConfirme}
                     onChange={(e) => setPasswordConfirme(e.target.value)}
                   />
+                  {serverError === "" ? null : (
+                    <Alert severity="error">{serverError}</Alert>
+                  )}
                   <Button
                     type="submit"
                     fullWidth
@@ -397,7 +405,7 @@ export const SignUp = () => {
                     size="large"
                     sx={{ mt: 3, mb: 2 }}
                   >
-                    Entrar
+                    Cadastre-se
                   </Button>
                   <Button
                     fullWidth
