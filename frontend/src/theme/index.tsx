@@ -2,6 +2,7 @@ import { createTheme } from "@mui/material/styles";
 
 export const theme = createTheme({
   palette: {
+    // mode: "dark",
     primary: {
       main: "#1DD3C5",
       contrastText: "#FFFFFF",
@@ -12,18 +13,18 @@ export const theme = createTheme({
       styleOverrides: {
         root: {
           boxShadow: "none",
-          ":hover":{
+          ":hover": {
             boxShadow: "none",
-          }
+          },
         },
       },
     },
-    MuiAvatar:{
-      styleOverrides:{
-        root:{
-          background: "#1DD3C5"
-        }
-      }
+    MuiAvatar: {
+      styleOverrides: {
+        root: {
+          background: "#1DD3C5",
+        },
+      },
     },
   },
 });

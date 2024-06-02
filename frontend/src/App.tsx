@@ -1,5 +1,6 @@
 import { setupIonicReact } from "@ionic/react";
 import { AppRouters } from "./Routes";
+import "./globals.scss"
 
 setupIonicReact();
 
