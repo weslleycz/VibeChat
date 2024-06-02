@@ -4,6 +4,8 @@ import {
   Button,
   Container,
   Grid,
+  IconButton,
+  InputAdornment,
   Link,
   TextField,
   Typography,
@@ -11,12 +13,20 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import styles from "./styles.module.scss";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 export const Auth = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const matches = useMediaQuery("(min-width:900px)");
+  const [showPassword, setShowPassword] = useState(false);
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const handleMouseDownPassword = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    event.preventDefault();
+  };
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
@@ -165,8 +175,21 @@ export const Auth = () => {
                   sx={{ background: "#F1F4FF" }}
                   name="password"
                   label="Senha"
-                  type="password"
+                  type={showPassword ? "password" : "text"}
                   id="password"
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                        >
+                          {!showPassword ? <Visibility /> : <VisibilityOff />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
                   autoComplete="current-password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}

@@ -8,18 +8,28 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
-const app_controller_1 = require("./app.controller");
 const app_service_1 = require("./app.service");
 const prisma_service_1 = require("./services/prisma.service");
-const user_controller_1 = require("./controllers/user/user.controller");
+const user_1 = require("./controllers/user");
+const event_emitter_1 = require("@nestjs/event-emitter");
+const bcrypt_service_1 = require("./services/bcrypt.service");
+const redis_service_1 = require("./services/redis.service");
+const jwt_service_1 = require("./services/jwt.service");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
-        imports: [],
-        controllers: [app_controller_1.AppController, user_controller_1.UserController],
-        providers: [app_service_1.AppService, prisma_service_1.PrismaService],
+        imports: [event_emitter_1.EventEmitterModule.forRoot(), user_1.UserModel],
+        controllers: [user_1.UserController],
+        providers: [
+            app_service_1.AppService,
+            prisma_service_1.PrismaService,
+            user_1.UserService,
+            bcrypt_service_1.BcryptService,
+            redis_service_1.RedisService,
+            jwt_service_1.JWTService,
+        ],
     })
 ], AppModule);
 //# sourceMappingURL=app.module.js.map
