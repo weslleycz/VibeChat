@@ -12,7 +12,7 @@ export const MessageClosed = () => {
           justifyContent: "center",
           alignItems: "center",
         }}
-        bgcolor={"#1DD3C5"}
+        bgcolor={"#F3F3F3"}
       >
         <IonImg
           className={styles["art-image"]}

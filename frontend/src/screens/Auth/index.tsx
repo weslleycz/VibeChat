@@ -57,6 +57,7 @@ export const Auth = () => {
       await set(res.data.token, expirationDate);
       history.push("/chat");
     } catch (error: any) {
+      console.log(error);
       setServerError(error.response.data.message);
     }
   };
@@ -132,7 +133,7 @@ export const Auth = () => {
                         sx={{ background: "#F1F4FF" }}
                         autoComplete="current-password"
                         value={password}
-                        type={!showPassword ? "password" : "text"}
+                        type={showPassword ? "password" : "text"}
                         InputProps={{
                           endAdornment: (
                             <InputAdornment position="end">
@@ -141,7 +142,7 @@ export const Auth = () => {
                                 onClick={handleClickShowPassword}
                                 onMouseDown={handleMouseDownPassword}
                               >
-                                {!showPassword ? (
+                                {showPassword ? (
                                   <VisibilityOff />
                                 ) : (
                                   <Visibility />

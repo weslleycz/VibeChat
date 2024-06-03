@@ -17,6 +17,14 @@ exports.UserModel = UserModel;
 __decorate([
     (0, swagger_1.ApiProperty)(),
     __metadata("design:type", String)
+], UserModel.prototype, "code", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Array)
+], UserModel.prototype, "contacts", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", String)
 ], UserModel.prototype, "id", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)(),

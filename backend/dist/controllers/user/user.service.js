@@ -14,6 +14,7 @@ const common_1 = require("@nestjs/common");
 const prisma_service_1 = require("../../services/prisma.service");
 const bcrypt_service_1 = require("../../services/bcrypt.service");
 const jwt_service_1 = require("../../services/jwt.service");
+const uuidv4_1 = require("uuidv4");
 let UserService = class UserService {
     constructor(prismaService, bcryptService, jwtservice) {
         this.prismaService = prismaService;
@@ -28,11 +29,13 @@ let UserService = class UserService {
         });
         if (existUser === null) {
             const hashPassword = await this.bcryptService.hashPassword(password);
+            const randomCode = (0, uuidv4_1.uuid)().substring(0, 6).toUpperCase();
             const user = await this.prismaService.user.create({
                 data: {
                     email: email,
                     name: name,
                     password: hashPassword,
+                    code: randomCode,
                 },
             });
             return this.jwtservice.login(user.id);

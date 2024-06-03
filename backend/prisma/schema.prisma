@@ -23,9 +23,11 @@ model User {
   id            String             @id @default(auto()) @map("_id") @db.ObjectId
   name          String
   email         String             @unique
-  password      String 
+  password      String
+  code          String             @unique
   messages      Message[]
   conversations ConversationUser[]
+  contacts      String[]
 }
 
 model Conversation {

@@ -5,7 +5,7 @@ import { Box, IconButton } from "@mui/material";
 import { useHistory } from "react-router-dom";
 import { Cookies } from "../../services/cookies";
 
-type StatusChat = "contatus" | "profile" | "message";
+type StatusChat = "contatus" | "profile";
 
 type Prosp = {
   chatStatus: StatusChat;
