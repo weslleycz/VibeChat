@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Post,
@@ -67,19 +68,41 @@ export class UserController {
     type: UserListContacts,
     isArray: true,
   })
-  @ApiResponse({ status: 401, description: 'Usuário inválido.' })
+  @ApiResponse({ status: 400, description: 'Usuário inválido.' })
   @UseInterceptors(InterceptorJwt)
   @ApiBearerAuth()
-  async getContacts(@Param('id') id: string): Promise<UserListContacts[]> {
+  async getContacts(@Param('id') id: string) {
     return await this.userService.getContacts(id);
   }
 
   @Put('/addContact')
   @ApiOperation({ summary: 'Adicionar contato' })
-  @ApiResponse({ status: 401, description: 'Usuário inválido.' })
+  @ApiResponse({ status: 400, description: 'Usuário inválido.' })
+  @ApiResponse({ status: 404, description: 'Usuário não encontrado.' })
   @UseInterceptors(InterceptorJwt)
   @ApiBearerAuth()
   async addContact(@Body() data: AddContactDTO) {
     return await this.userService.addContact(data);
+  }
+
+  @Delete('/removeContact/:userId/:contactId')
+  @ApiOperation({ summary: 'Remover um contato' })
+  @ApiResponse({
+    status: 200,
+    description: 'Contato removido com sucesso.',
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Usuário inválido.',
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Contato não encontrado.',
+  })
+  async removeContact(
+    @Param('userId') userId: string,
+    @Param('contactId') contactId: string,
+  ) {
+    return await this.userService.removeContact({ contactId, userId });
   }
 }

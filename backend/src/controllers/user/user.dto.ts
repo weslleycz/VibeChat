@@ -86,6 +86,8 @@ export type UserListContactsOmit = Omit<UserModel, 'password'>;
 
 export class UserListContacts implements UserListContactsOmit {
   @ApiProperty()
+  conversationIds: string[];
+  @ApiProperty()
   name: string;
   @ApiProperty()
   email: string;
@@ -107,4 +109,16 @@ export class AddContactDTO {
   @IsNotEmpty()
   @ApiProperty()
   codeContact: string;
+}
+
+export class DeleteContactDTO {
+  @IsString()
+  @IsNotEmpty()
+  @ApiProperty()
+  userId: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @ApiProperty()
+  contactId: string;
 }

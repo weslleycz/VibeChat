@@ -20,28 +20,20 @@ generator erd {
 }
 
 model User {
-  id            String             @id @default(auto()) @map("_id") @db.ObjectId
-  name          String
-  email         String             @unique
-  password      String
-  code          String             @unique
-  messages      Message[]
-  conversations ConversationUser[]
-  contacts      String[]
+  id              String    @id @default(auto()) @map("_id") @db.ObjectId
+  name            String
+  email           String    @unique
+  password        String
+  code            String    @unique
+  messages        Message[]
+  contacts        String[]
+  conversationIds String[]
 }
 
 model Conversation {
-  id       String             @id @default(auto()) @map("_id") @db.ObjectId
-  users    ConversationUser[]
+  id       String    @id @default(auto()) @map("_id") @db.ObjectId
   messages Message[]
-}
-
-model ConversationUser {
-  id             String       @id @default(auto()) @map("_id") @db.ObjectId
-  user           User         @relation(fields: [userId], references: [id])
-  userId         String       @db.ObjectId
-  conversation   Conversation @relation(fields: [conversationId], references: [id])
-  conversationId String       @db.ObjectId
+  usersIds String[]
 }
 
 model Message {

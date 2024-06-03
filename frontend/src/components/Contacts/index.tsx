@@ -8,9 +8,32 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import Typography from "@mui/material/Typography";
+import { Virtuoso } from "react-virtuoso";
+import { Contact } from "../Contact";
+import { useEffect, useState } from "react";
+import { Cookies } from "../../services/cookies";
+import { decodeToken } from "react-jwt";
+import { api } from "../../services/api";
+import { IContact } from "../../types/IContact";
+import { ModalAddContact } from "../ModalAddContact";
 
 export const Contacts = () => {
   const matches = useMediaQuery("(min-width:900px)");
+  const [contacts, setContacts] = useState<IContact[]>([]);
+  useEffect(() => {
+    (async () => {
+      const { get } = new Cookies();
+      const tokenJWT = (await get()) as string;
+      const { data } = decodeToken(tokenJWT) as any;
+      try {
+        const res = await api.get(`/user/getContacts/${data}`);
+        setContacts(res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, []);
+
   return (
     <>
       {matches ? (
@@ -19,19 +42,7 @@ export const Contacts = () => {
             <Typography variant="h6" gutterBottom>
               Contatos
             </Typography>
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                padding: "8px",
-                borderRadius: 25,
-                cursor: "pointer",
-                backgroundColor: "#1DD3C5",
-                color: "white",
-              }}
-            >
-              <AddIcon fontSize="small" />
-            </Box>
+            <ModalAddContact setContacts={setContacts} />
           </Box>
           <Box paddingTop={1}>
             <Box
@@ -58,6 +69,17 @@ export const Contacts = () => {
                 placeholder="Buscar..."
               />
             </Box>
+            <Box marginTop={2}>
+              <Virtuoso
+                style={{ height: "500px" }}
+                totalCount={contacts.length}
+                itemContent={(index) => (
+                  <>
+                    <Contact key={index} {...contacts[index]} />
+                  </>
+                )}
+              />
+            </Box>
           </Box>
         </Box>
       ) : (
@@ -66,19 +88,7 @@ export const Contacts = () => {
             <Typography variant="h6" gutterBottom>
               Contatos
             </Typography>
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                padding: "8px",
-                borderRadius: 25,
-                cursor: "pointer",
-                backgroundColor: "#1DD3C5",
-                color: "white",
-              }}
-            >
-              <AddIcon fontSize="small" />
-            </Box>
+            <ModalAddContact setContacts={setContacts} />
           </Box>
           <Box paddingTop={1}>
             <Box

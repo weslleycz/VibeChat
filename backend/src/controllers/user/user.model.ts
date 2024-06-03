@@ -3,6 +3,8 @@ import { User as UserPrisma } from '@prisma/client';
 
 export class UserModel implements UserPrisma {
   @ApiProperty()
+  conversationIds: string[];
+  @ApiProperty()
   code: string;
   @ApiProperty()
   contacts: string[];

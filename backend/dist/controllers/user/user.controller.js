@@ -34,6 +34,9 @@ let UserController = class UserController {
     async addContact(data) {
         return await this.userService.addContact(data);
     }
+    async removeContact(userId, contactId) {
+        return await this.userService.removeContact({ contactId, userId });
+    }
 };
 exports.UserController = UserController;
 __decorate([
@@ -80,7 +83,7 @@ __decorate([
         type: user_dto_1.UserListContacts,
         isArray: true,
     }),
-    (0, swagger_1.ApiResponse)({ status: 401, description: 'Usuário inválido.' }),
+    (0, swagger_1.ApiResponse)({ status: 400, description: 'Usuário inválido.' }),
     (0, common_1.UseInterceptors)(middlewares_1.InterceptorJwt),
     (0, swagger_1.ApiBearerAuth)(),
     __param(0, (0, common_1.Param)('id')),
@@ -91,7 +94,8 @@ __decorate([
 __decorate([
     (0, common_1.Put)('/addContact'),
     (0, swagger_1.ApiOperation)({ summary: 'Adicionar contato' }),
-    (0, swagger_1.ApiResponse)({ status: 401, description: 'Usuário inválido.' }),
+    (0, swagger_1.ApiResponse)({ status: 400, description: 'Usuário inválido.' }),
+    (0, swagger_1.ApiResponse)({ status: 404, description: 'Usuário não encontrado.' }),
     (0, common_1.UseInterceptors)(middlewares_1.InterceptorJwt),
     (0, swagger_1.ApiBearerAuth)(),
     __param(0, (0, common_1.Body)()),
@@ -99,6 +103,27 @@ __decorate([
     __metadata("design:paramtypes", [user_dto_1.AddContactDTO]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "addContact", null);
+__decorate([
+    (0, common_1.Delete)('/removeContact/:userId/:contactId'),
+    (0, swagger_1.ApiOperation)({ summary: 'Remover um contato' }),
+    (0, swagger_1.ApiResponse)({
+        status: 200,
+        description: 'Contato removido com sucesso.',
+    }),
+    (0, swagger_1.ApiResponse)({
+        status: 400,
+        description: 'Usuário inválido.',
+    }),
+    (0, swagger_1.ApiResponse)({
+        status: 404,
+        description: 'Contato não encontrado.',
+    }),
+    __param(0, (0, common_1.Param)('userId')),
+    __param(1, (0, common_1.Param)('contactId')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, String]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "removeContact", null);
 exports.UserController = UserController = __decorate([
     (0, common_1.Controller)('user'),
     (0, swagger_1.ApiTags)('User'),

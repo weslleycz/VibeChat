@@ -76,11 +76,11 @@ let UserService = class UserService {
                 select: {
                     name: true,
                     code: true,
-                    messages: true,
-                    contacts: true,
-                    conversations: true,
+                    messages: false,
+                    contacts: false,
                     email: true,
                     id: true,
+                    conversationIds: true,
                 },
                 orderBy: {
                     name: 'asc',
@@ -89,41 +89,92 @@ let UserService = class UserService {
             return contacts;
         }
         catch (error) {
-            throw new common_1.HttpException('Usuário inválido', 401);
+            throw new common_1.HttpException('Usuário inválido', 400);
         }
     }
     async addContact({ codeContact, userId }) {
         try {
-            const contact = await this.prismaService.user.findUnique({
-                where: {
-                    code: codeContact,
-                },
-            });
-            const user = await this.prismaService.user.update({
+            const userData = await this.prismaService.user.findUnique({
                 where: {
                     id: userId,
                 },
-                data: {
-                    contacts: {
-                        push: contact.code,
-                    },
-                },
             });
-            if (user != null) {
+            const contactIndex = userData.contacts.indexOf(codeContact);
+            if (contactIndex === -1) {
+                const contact = await this.prismaService.user.findUnique({
+                    where: {
+                        code: codeContact,
+                    },
+                });
+                if (contact != null) {
+                    const conversation = await this.prismaService.conversation.create({
+                        data: {
+                            usersIds: [userId, contact.id],
+                        },
+                    });
+                    const user = await this.prismaService.user.update({
+                        where: {
+                            id: userId,
+                        },
+                        data: {
+                            contacts: {
+                                push: contact.code,
+                            },
+                            conversationIds: {
+                                push: conversation.id,
+                            },
+                        },
+                    });
+                    if (user != null) {
+                        const contacts = await this.prismaService.user.findMany({
+                            where: {
+                                code: {
+                                    in: user.contacts.map((contain) => contain),
+                                },
+                            },
+                            select: {
+                                name: true,
+                                code: true,
+                                messages: false,
+                                contacts: false,
+                                email: true,
+                                id: true,
+                                conversationIds: true,
+                            },
+                            orderBy: {
+                                name: 'asc',
+                            },
+                        });
+                        return contacts;
+                    }
+                    else {
+                        throw new common_1.HttpException('Usuário inválido', 400);
+                    }
+                }
+                else {
+                    throw new common_1.HttpException('Usuário não encontrado', 404);
+                }
+            }
+            else {
+                const userData = await this.prismaService.user.findUnique({
+                    where: {
+                        id: userId,
+                    },
+                });
                 const contacts = await this.prismaService.user.findMany({
                     where: {
                         code: {
-                            in: user.contacts.map((contain) => contain),
+                            in: userData.contacts.map((contain) => contain),
                         },
                     },
                     select: {
                         name: true,
                         code: true,
-                        messages: true,
-                        contacts: true,
-                        conversations: true,
+                        messages: false,
+                        contacts: false,
                         email: true,
                         id: true,
+                        conversationIds: true,
                     },
                     orderBy: {
                         name: 'asc',
@@ -131,12 +182,39 @@ let UserService = class UserService {
                 });
                 return contacts;
             }
+        }
+        catch (error) {
+            throw new common_1.HttpException('Usuário inválido', 400);
+        }
+    }
+    async removeContact({ contactId, userId }) {
+        try {
+            const user = await this.prismaService.user.findUnique({
+                where: {
+                    id: userId,
+                },
+            });
+            const contactIndex = user.contacts.indexOf(contactId);
+            if (contactIndex !== -1) {
+                const contacts = user.contacts.splice(contactIndex, 1);
+                await this.prismaService.user.update({
+                    where: {
+                        id: userId,
+                    },
+                    data: {
+                        contacts: {
+                            set: contacts,
+                        },
+                    },
+                });
+                return 'Contato removido com sucesso.';
+            }
             else {
-                throw new common_1.HttpException('Usuário inválido', 401);
+                throw new common_1.HttpException('Contato não encontrado.', 404);
             }
         }
         catch (error) {
-            throw new common_1.HttpException('Usuário inválido', 401);
+            throw new common_1.HttpException('Usuário inválido', 400);
         }
     }
 };
