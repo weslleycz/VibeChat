@@ -43,10 +43,25 @@ export class UserService {
       throw new HttpException('Usuário ou senha inválidos', 401);
     } else {
       if (await this.bcryptService.comparePasswords(password, user.password)) {
-        return this.jwtservice.login(user.id);
+        return {
+          token: this.jwtservice.login(user.id),
+        };
       } else {
         throw new HttpException('Usuário ou senha inválidos', 401);
       }
+    }
+  }
+
+  async getContacts(id: string) {
+    try {
+      const user = await this.prismaService.user.findUnique({
+        where: {
+          id,
+        },
+      });
+      return user.contacts;
+    } catch (error) {
+      throw new HttpException('Usuário inválido', 401);
     }
   }
 }

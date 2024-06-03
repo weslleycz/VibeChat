@@ -15,12 +15,27 @@ const event_emitter_1 = require("@nestjs/event-emitter");
 const bcrypt_service_1 = require("./services/bcrypt.service");
 const redis_service_1 = require("./services/redis.service");
 const jwt_service_1 = require("./services/jwt.service");
+const middlewares_1 = require("./middlewares");
+const throttler_1 = require("@nestjs/throttler");
+const logger_service_1 = require("./services/logger.service");
 let AppModule = class AppModule {
+    configure(consumer) {
+        consumer.apply(middlewares_1.LogMiddleware).forRoutes('*');
+    }
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
-        imports: [event_emitter_1.EventEmitterModule.forRoot(), user_1.UserModel],
+        imports: [
+            event_emitter_1.EventEmitterModule.forRoot(),
+            user_1.UserModel,
+            throttler_1.ThrottlerModule.forRoot([
+                {
+                    ttl: 60000,
+                    limit: 100,
+                },
+            ]),
+        ],
         controllers: [user_1.UserController],
         providers: [
             app_service_1.AppService,
@@ -29,6 +44,7 @@ exports.AppModule = AppModule = __decorate([
             bcrypt_service_1.BcryptService,
             redis_service_1.RedisService,
             jwt_service_1.JWTService,
+            logger_service_1.LoggerService,
         ],
     })
 ], AppModule);
