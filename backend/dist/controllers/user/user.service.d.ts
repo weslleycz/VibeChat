@@ -1,4 +1,4 @@
-import { CreateUserDto, UserLoginDto } from './user.dto';
+import { AddContactDTO, CreateUserDto, UserLoginDto } from './user.dto';
 import { PrismaService } from 'src/services/prisma.service';
 import { BcryptService } from 'src/services/bcrypt.service';
 import { JWTService } from 'src/services/jwt.service';
@@ -8,8 +8,43 @@ export declare class UserService {
     private readonly jwtservice;
     constructor(prismaService: PrismaService, bcryptService: BcryptService, jwtservice: JWTService);
     create({ email, name, password }: CreateUserDto): Promise<object>;
-    login({ email, password }: UserLoginDto): Promise<{
-        token: Promise<object>;
-    }>;
-    getContacts(id: string): Promise<string[]>;
+    login({ email, password }: UserLoginDto): Promise<object>;
+    getContacts(id: string): Promise<{
+        email: string;
+        name: string;
+        id: string;
+        code: string;
+        contacts: string[];
+        messages: {
+            id: string;
+            userId: string;
+            sentAt: Date;
+            content: string;
+            conversationId: string;
+        }[];
+        conversations: {
+            id: string;
+            userId: string;
+            conversationId: string;
+        }[];
+    }[]>;
+    addContact({ codeContact, userId }: AddContactDTO): Promise<{
+        email: string;
+        name: string;
+        id: string;
+        code: string;
+        contacts: string[];
+        messages: {
+            id: string;
+            userId: string;
+            sentAt: Date;
+            content: string;
+            conversationId: string;
+        }[];
+        conversations: {
+            id: string;
+            userId: string;
+            conversationId: string;
+        }[];
+    }[]>;
 }

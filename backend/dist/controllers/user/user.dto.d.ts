@@ -1,3 +1,4 @@
+import { UserModel } from './user.model';
 export declare class CreateUserDto {
     name: string;
     email: string;
@@ -12,4 +13,16 @@ export declare class UserLoginDto {
 }
 export declare class UserLoginResponseDto {
     token: string;
+}
+export type UserListContactsOmit = Omit<UserModel, 'password'>;
+export declare class UserListContacts implements UserListContactsOmit {
+    name: string;
+    email: string;
+    code: string;
+    contacts: string[];
+    id: string;
+}
+export declare class AddContactDTO {
+    userId: string;
+    codeContact: string;
 }

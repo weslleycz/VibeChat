@@ -19,7 +19,7 @@ export class JWTService {
     };
     const token = sign(payload, this.secretKey, { expiresIn: '72h' });
     await this.redisService.setValue(token, id, 259200);
-    return token;
+    return { token };
   }
 
   public verify(token: string): boolean {

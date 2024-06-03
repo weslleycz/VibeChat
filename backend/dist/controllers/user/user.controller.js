@@ -17,6 +17,7 @@ const common_1 = require("@nestjs/common");
 const swagger_1 = require("@nestjs/swagger");
 const user_dto_1 = require("./user.dto");
 const user_service_1 = require("./user.service");
+const middlewares_1 = require("../../middlewares");
 let UserController = class UserController {
     constructor(userService) {
         this.userService = userService;
@@ -26,6 +27,12 @@ let UserController = class UserController {
     }
     async login(data) {
         return this.userService.login(data);
+    }
+    async getContacts(id) {
+        return await this.userService.getContacts(id);
+    }
+    async addContact(data) {
+        return await this.userService.addContact(data);
     }
 };
 exports.UserController = UserController;
@@ -64,6 +71,34 @@ __decorate([
     __metadata("design:paramtypes", [user_dto_1.UserLoginDto]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "login", null);
+__decorate([
+    (0, common_1.Get)('/getContacts/:id'),
+    (0, swagger_1.ApiOperation)({ summary: 'Busca a lista de contatos do usuário' }),
+    (0, swagger_1.ApiResponse)({
+        status: 200,
+        description: 'Lista de contatos do usuário.',
+        type: user_dto_1.UserListContacts,
+        isArray: true,
+    }),
+    (0, swagger_1.ApiResponse)({ status: 401, description: 'Usuário inválido.' }),
+    (0, common_1.UseInterceptors)(middlewares_1.InterceptorJwt),
+    (0, swagger_1.ApiBearerAuth)(),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "getContacts", null);
+__decorate([
+    (0, common_1.Put)('/addContact'),
+    (0, swagger_1.ApiOperation)({ summary: 'Adicionar contato' }),
+    (0, swagger_1.ApiResponse)({ status: 401, description: 'Usuário inválido.' }),
+    (0, common_1.UseInterceptors)(middlewares_1.InterceptorJwt),
+    (0, swagger_1.ApiBearerAuth)(),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [user_dto_1.AddContactDTO]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "addContact", null);
 exports.UserController = UserController = __decorate([
     (0, common_1.Controller)('user'),
     (0, swagger_1.ApiTags)('User'),

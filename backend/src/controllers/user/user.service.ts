@@ -1,5 +1,5 @@
 import { HttpException, Injectable } from '@nestjs/common';
-import { CreateUserDto, UserLoginDto } from './user.dto';
+import { AddContactDTO, CreateUserDto, UserLoginDto } from './user.dto';
 import { PrismaService } from 'src/services/prisma.service';
 import { BcryptService } from 'src/services/bcrypt.service';
 import { JWTService } from 'src/services/jwt.service';
@@ -43,9 +43,7 @@ export class UserService {
       throw new HttpException('Usuário ou senha inválidos', 401);
     } else {
       if (await this.bcryptService.comparePasswords(password, user.password)) {
-        return {
-          token: this.jwtservice.login(user.id),
-        };
+        return this.jwtservice.login(user.id);
       } else {
         throw new HttpException('Usuário ou senha inválidos', 401);
       }
@@ -59,7 +57,74 @@ export class UserService {
           id,
         },
       });
-      return user.contacts;
+
+      const contacts = await this.prismaService.user.findMany({
+        where: {
+          code: {
+            in: user.contacts.map((contain) => contain),
+          },
+        },
+        select: {
+          name: true,
+          code: true,
+          messages: true,
+          contacts: true,
+          conversations: true,
+          email: true,
+          id: true,
+        },
+        orderBy: {
+          name: 'asc',
+        },
+      });
+
+      return contacts;
+    } catch (error) {
+      throw new HttpException('Usuário inválido', 401);
+    }
+  }
+
+  async addContact({ codeContact, userId }: AddContactDTO) {
+    try {
+      const contact = await this.prismaService.user.findUnique({
+        where: {
+          code: codeContact,
+        },
+      });
+      const user = await this.prismaService.user.update({
+        where: {
+          id: userId,
+        },
+        data: {
+          contacts: {
+            push: contact.code,
+          },
+        },
+      });
+      if (user != null) {
+        const contacts = await this.prismaService.user.findMany({
+          where: {
+            code: {
+              in: user.contacts.map((contain) => contain),
+            },
+          },
+          select: {
+            name: true,
+            code: true,
+            messages: true,
+            contacts: true,
+            conversations: true,
+            email: true,
+            id: true,
+          },
+          orderBy: {
+            name: 'asc',
+          },
+        });
+        return contacts;
+      } else {
+        throw new HttpException('Usuário inválido', 401);
+      }
     } catch (error) {
       throw new HttpException('Usuário inválido', 401);
     }

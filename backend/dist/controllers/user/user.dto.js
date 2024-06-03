@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UserLoginResponseDto = exports.UserLoginDto = exports.CreateUserDto = void 0;
+exports.AddContactDTO = exports.UserListContacts = exports.UserLoginResponseDto = exports.UserLoginDto = exports.CreateUserDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
 const class_transformer_1 = require("class-transformer");
@@ -93,4 +93,42 @@ __decorate([
     (0, swagger_1.ApiProperty)({ example: 'generated-jwt-token' }),
     __metadata("design:type", String)
 ], UserLoginResponseDto.prototype, "token", void 0);
+class UserListContacts {
+}
+exports.UserListContacts = UserListContacts;
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", String)
+], UserListContacts.prototype, "name", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", String)
+], UserListContacts.prototype, "email", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", String)
+], UserListContacts.prototype, "code", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Array)
+], UserListContacts.prototype, "contacts", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", String)
+], UserListContacts.prototype, "id", void 0);
+class AddContactDTO {
+}
+exports.AddContactDTO = AddContactDTO;
+__decorate([
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", String)
+], AddContactDTO.prototype, "userId", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", String)
+], AddContactDTO.prototype, "codeContact", void 0);
 //# sourceMappingURL=user.dto.js.map

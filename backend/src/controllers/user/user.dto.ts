@@ -8,6 +8,7 @@ import {
   IsEmail,
 } from 'class-validator';
 import { plainToClass } from 'class-transformer';
+import { UserModel } from './user.model';
 
 export class CreateUserDto {
   @ApiProperty({
@@ -79,4 +80,31 @@ export class UserLoginDto {
 export class UserLoginResponseDto {
   @ApiProperty({ example: 'generated-jwt-token' })
   token: string;
+}
+
+export type UserListContactsOmit = Omit<UserModel, 'password'>;
+
+export class UserListContacts implements UserListContactsOmit {
+  @ApiProperty()
+  name: string;
+  @ApiProperty()
+  email: string;
+  @ApiProperty()
+  code: string;
+  @ApiProperty()
+  contacts: string[];
+  @ApiProperty()
+  id: string;
+}
+
+export class AddContactDTO {
+  @IsString()
+  @IsNotEmpty()
+  @ApiProperty()
+  userId: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @ApiProperty()
+  codeContact: string;
 }

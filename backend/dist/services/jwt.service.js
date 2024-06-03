@@ -26,7 +26,7 @@ let JWTService = class JWTService {
         };
         const token = (0, jsonwebtoken_1.sign)(payload, this.secretKey, { expiresIn: '72h' });
         await this.redisService.setValue(token, id, 259200);
-        return token;
+        return { token };
     }
     verify(token) {
         try {
