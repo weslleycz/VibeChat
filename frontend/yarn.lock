@@ -1034,6 +1034,11 @@
   resolved "https://registry.npmjs.org/@capacitor/preferences/-/preferences-6.0.0.tgz"
   integrity sha512-4A49UKEc/sgf28TFNwRX4Kx6G0oMeRC9btA2voaEuL2LZd2l8IMfAEFDIrfQWi5rYE6RWenEUexUTyiEZnYFvQ==
 
+"@capacitor/screen-orientation@^6.0.0":
+  version "6.0.0"
+  resolved "https://registry.npmjs.org/@capacitor/screen-orientation/-/screen-orientation-6.0.0.tgz"
+  integrity sha512-E2hoKNcvn2DwDyFDyJr9t725oN5VEETPQ57wHm4DPnz3AhTqLXqMdI6pvmAiWenfPIW2N0XMDqWLhLKpftEp4A==
+
 "@capacitor/status-bar@^6.0.0":
   version "6.0.0"
   resolved "https://registry.npmjs.org/@capacitor/status-bar/-/status-bar-6.0.0.tgz"
@@ -2491,7 +2496,7 @@ aws4@^1.8.0:
 
 axios-extensions@^3.1.6:
   version "3.1.6"
-  resolved "https://registry.yarnpkg.com/axios-extensions/-/axios-extensions-3.1.6.tgz#bfa72f65f44f0a3efa55a030cdaaa6451c246b1e"
+  resolved "https://registry.npmjs.org/axios-extensions/-/axios-extensions-3.1.6.tgz"
   integrity sha512-CmwMYxxAw4DcQDJ7/2Iv4GJj1Ao48lJEPieycgZQH6m1KcYZqf9zm2HM/CsULqheCpYxZbiGrCfZf5tVjXqoLg==
   dependencies:
     lru-cache "^7.14.0"
@@ -2500,7 +2505,7 @@ axios-extensions@^3.1.6:
 
 axios@^1.7.2:
   version "1.7.2"
-  resolved "https://registry.yarnpkg.com/axios/-/axios-1.7.2.tgz#b625db8a7051fbea61c35a3cbb3a1daa7b9c7621"
+  resolved "https://registry.npmjs.org/axios/-/axios-1.7.2.tgz"
   integrity sha512-2A8QhOMrbomlDuiLeK9XibIBzuHeRcqqNOHp0Cyp5EoJ1IFDh+XZH3A6BkXtv0K4gFGCI0Y4BM7B1wOEi0Rmgw==
   dependencies:
     follow-redirects "^1.15.6"
@@ -3156,7 +3161,7 @@ domexception@^4.0.0:
 
 dotenv@^16.4.5:
   version "16.4.5"
-  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-16.4.5.tgz#cdd3b3b604cb327e286b4762e13502f717cb099f"
+  resolved "https://registry.npmjs.org/dotenv/-/dotenv-16.4.5.tgz"
   integrity sha512-ZmdL2rui+eB2YwhsWzjInR8LldtZHGDoQ1ugH85ppHKwpUHL7j7rN0Ti9NCnGiQbhaZ11FpR+7ao1dNsmduNUg==
 
 ecc-jsbn@~0.1.1:
@@ -3683,7 +3688,7 @@ flatted@^3.2.9:
 
 follow-redirects@^1.15.6:
   version "1.15.6"
-  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.15.6.tgz#7f815c0cda4249c74ff09e95ef97c23b5fd0399b"
+  resolved "https://registry.npmjs.org/follow-redirects/-/follow-redirects-1.15.6.tgz"
   integrity sha512-wWN62YITEaOpSK584EZXJafH1AGpO8RVgElfkuXbTOrPX4fIfOyEpW/CsiNd8JdYrAoOvafRTOEnvsO++qCqFA==
 
 for-each@^0.3.3:
@@ -4710,7 +4715,7 @@ lru-cache@^5.1.1:
 
 lru-cache@^7.14.0:
   version "7.18.3"
-  resolved "https://registry.yarnpkg.com/lru-cache/-/lru-cache-7.18.3.tgz#f793896e0fd0e954a59dfdd82f0773808df6aa89"
+  resolved "https://registry.npmjs.org/lru-cache/-/lru-cache-7.18.3.tgz"
   integrity sha512-jumlc0BIUrS3qJGgIkWZsyfAM7NCWiBcCDhnd+3NNM5KbBmLTgHVfWBcg6W+rLUsIpzpERPsvwUP7CckAQSOoA==
 
 lz-string@^1.5.0:
@@ -5228,7 +5233,7 @@ proxy-from-env@1.0.0:
 
 proxy-from-env@^1.1.0:
   version "1.1.0"
-  resolved "https://registry.yarnpkg.com/proxy-from-env/-/proxy-from-env-1.1.0.tgz#e102f16ca355424865755d2c9e8ea4f24d58c3e2"
+  resolved "https://registry.npmjs.org/proxy-from-env/-/proxy-from-env-1.1.0.tgz"
   integrity sha512-D+zkORCbA9f1tdWRK0RaCR3GPv50cMxcrz4X8k5LTSUD1Dkw47mKJEZQNunItRTkWwgtaUSo1RVFRIG9ZXiFYg==
 
 psl@^1.1.33:
@@ -5338,6 +5343,11 @@ react-transition-group@^4.4.5:
     dom-helpers "^5.0.1"
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
+
+react-virtuoso@^4.7.11:
+  version "4.7.11"
+  resolved "https://registry.yarnpkg.com/react-virtuoso/-/react-virtuoso-4.7.11.tgz#1bf97885aae6f140f53487b48ebe87c37c57def3"
+  integrity sha512-Kdn9qEtQI2ulEuBMzW2BTkDsfijB05QUd6lpZ1K36oyA3k65Cz4lG4EKrh2pCfUafX4C2uMSZOwzMOhbrMOTFA==
 
 react@^18.2.0:
   version "18.3.1"
@@ -6275,7 +6285,7 @@ util-deprecate@^1.0.1:
 
 util@^0.12.3:
   version "0.12.5"
-  resolved "https://registry.yarnpkg.com/util/-/util-0.12.5.tgz#5f17a6059b73db61a875668781a1c2b136bd6fbc"
+  resolved "https://registry.npmjs.org/util/-/util-0.12.5.tgz"
   integrity sha512-kZf/K6hEIrWHI6XqOFUiiMa+79wE/D8Q+NCNAWclkyg3b4d2k7s0QGepNjiABc+aR3N1PAyHL7p6UcLY6LmrnA==
   dependencies:
     inherits "^2.0.3"

@@ -6,9 +6,19 @@ import { Container } from "./components/Container";
 import { Splash } from "./screens/Splash";
 import { Auth } from "./screens/Auth";
 import { SignUp } from "./screens/SignUp";
+import { PrivateRoute } from "./components/PrivateRoute";
+import { ScreenOrientation } from "@capacitor/screen-orientation";
+import { Chat } from "./screens/Chat";
+import { useEffect } from "react";
+import { Virtuoso } from "react-virtuoso";
 
 export const AppRouters = () => {
   StatusBar.setBackgroundColor({ color: "#1DD3C5" });
+  useEffect(() => {
+    (async () => {
+      await ScreenOrientation.lock({ orientation: "portrait" });
+    })();
+  }, []);
   return (
     <>
       <Container>
@@ -24,6 +34,7 @@ export const AppRouters = () => {
               <Route exact path="/signUp">
                 <SignUp />
               </Route>
+              <PrivateRoute exact key={"/chat"} component={<Chat />} />
             </IonRouterOutlet>
           </IonReactRouter>
         </IonApp>
