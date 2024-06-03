@@ -8,5 +8,8 @@ export declare class UserService {
     private readonly jwtservice;
     constructor(prismaService: PrismaService, bcryptService: BcryptService, jwtservice: JWTService);
     create({ email, name, password }: CreateUserDto): Promise<object>;
-    login({ email, password }: UserLoginDto): Promise<object>;
+    login({ email, password }: UserLoginDto): Promise<{
+        token: Promise<object>;
+    }>;
+    getContacts(id: string): Promise<string[]>;
 }

@@ -53,11 +53,26 @@ let UserService = class UserService {
         }
         else {
             if (await this.bcryptService.comparePasswords(password, user.password)) {
-                return this.jwtservice.login(user.id);
+                return {
+                    token: this.jwtservice.login(user.id),
+                };
             }
             else {
                 throw new common_1.HttpException('Usuário ou senha inválidos', 401);
             }
+        }
+    }
+    async getContacts(id) {
+        try {
+            const user = await this.prismaService.user.findUnique({
+                where: {
+                    id,
+                },
+            });
+            return user.contacts;
+        }
+        catch (error) {
+            throw new common_1.HttpException('Usuário inválido', 401);
         }
     }
 };
