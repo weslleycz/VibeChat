@@ -4,4 +4,6 @@ export type IContact = {
   conversations: any[];
   email: string;
   id: string;
+  chatId: string;
+  notRead: number;
 };

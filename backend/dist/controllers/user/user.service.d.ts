@@ -10,18 +10,20 @@ export declare class UserService {
     create({ email, name, password }: CreateUserDto): Promise<object>;
     login({ email, password }: UserLoginDto): Promise<object>;
     getContacts(id: string): Promise<{
-        email: string;
-        name: string;
+        chatId: string;
         id: string;
-        code: string;
-        conversationIds: string[];
-    }[]>;
-    addContact({ codeContact, userId }: AddContactDTO): Promise<{
-        email: string;
         name: string;
-        id: string;
+        email: string;
+        password: string;
         code: string;
-        conversationIds: string[];
     }[]>;
-    removeContact({ contactId, userId }: DeleteContactDTO): Promise<string>;
+    addContact({ codeContact, userId }: AddContactDTO): Promise<Promise<{
+        chatId: string;
+        id: string;
+        name: string;
+        email: string;
+        password: string;
+        code: string;
+    }>[]>;
+    removeContact({ contactId, userId }: DeleteContactDTO): Promise<void>;
 }

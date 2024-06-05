@@ -6,18 +6,20 @@ export declare class UserController {
     create(data: CreateUserDto): Promise<object>;
     login(data: UserLoginDto): Promise<object>;
     getContacts(id: string): Promise<{
-        email: string;
-        name: string;
+        chatId: string;
         id: string;
-        code: string;
-        conversationIds: string[];
-    }[]>;
-    addContact(data: AddContactDTO): Promise<{
-        email: string;
         name: string;
-        id: string;
+        email: string;
+        password: string;
         code: string;
-        conversationIds: string[];
     }[]>;
-    removeContact(userId: string, contactId: string): Promise<string>;
+    addContact(data: AddContactDTO): Promise<Promise<{
+        chatId: string;
+        id: string;
+        name: string;
+        email: string;
+        password: string;
+        code: string;
+    }>[]>;
+    removeContact(userId: string, contactId: string): Promise<void>;
 }

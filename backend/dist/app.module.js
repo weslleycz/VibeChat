@@ -18,6 +18,9 @@ const jwt_service_1 = require("./services/jwt.service");
 const middlewares_1 = require("./middlewares");
 const throttler_1 = require("@nestjs/throttler");
 const logger_service_1 = require("./services/logger.service");
+const chat_gateway_1 = require("./websocket/chat/chat.gateway");
+const message_controller_1 = require("./controllers/message/message.controller");
+const message_service_1 = require("./controllers/message/message.service");
 let AppModule = class AppModule {
     configure(consumer) {
         consumer.apply(middlewares_1.LogMiddleware).forRoutes('*');
@@ -36,7 +39,7 @@ exports.AppModule = AppModule = __decorate([
                 },
             ]),
         ],
-        controllers: [user_1.UserController],
+        controllers: [user_1.UserController, message_controller_1.MessageController],
         providers: [
             app_service_1.AppService,
             prisma_service_1.PrismaService,
@@ -45,6 +48,8 @@ exports.AppModule = AppModule = __decorate([
             redis_service_1.RedisService,
             jwt_service_1.JWTService,
             logger_service_1.LoggerService,
+            chat_gateway_1.ChatGateway,
+            message_service_1.MessageService,
         ],
     })
 ], AppModule);

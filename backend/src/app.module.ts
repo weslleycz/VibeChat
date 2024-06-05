@@ -9,6 +9,9 @@ import { JWTService } from './services/jwt.service';
 import { LogMiddleware } from './middlewares';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { LoggerService } from './services/logger.service';
+import { ChatGateway } from './websocket/chat/chat.gateway';
+import { MessageController } from './controllers/message/message.controller';
+import { MessageService } from './controllers/message/message.service';
 
 @Module({
   imports: [
@@ -21,7 +24,7 @@ import { LoggerService } from './services/logger.service';
       },
     ]),
   ],
-  controllers: [UserController],
+  controllers: [UserController, MessageController],
   providers: [
     AppService,
     PrismaService,
@@ -30,6 +33,8 @@ import { LoggerService } from './services/logger.service';
     RedisService,
     JWTService,
     LoggerService,
+    ChatGateway,
+    MessageService,
   ],
 })
 export class AppModule {

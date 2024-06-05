@@ -11,7 +11,6 @@ export const Splash = () => {
     const timer = setTimeout(async () => {
       const { get } = new Cookies();
       const token = await get();
-      console.log(!!token);
       if (!!token) {
         history.push("/chat");
       }else{

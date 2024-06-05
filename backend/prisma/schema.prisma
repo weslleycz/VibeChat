@@ -20,28 +20,37 @@ generator erd {
 }
 
 model User {
-  id              String    @id @default(auto()) @map("_id") @db.ObjectId
-  name            String
-  email           String    @unique
-  password        String
-  code            String    @unique
-  messages        Message[]
-  contacts        String[]
-  conversationIds String[]
+  id       String    @id @default(auto()) @map("_id") @db.ObjectId
+  name     String
+  email    String    @unique
+  password String
+  code     String    @unique
+  messages Message[]
+  Contact  Contact[]
 }
 
-model Conversation {
+model Contact {
+  id            String  @id @default(auto()) @map("_id") @db.ObjectId
+  user          User    @relation(fields: [userId], references: [id])
+  userId        String  @db.ObjectId
+  chat          Chat?   @relation(fields: [chatId], references: [id])
+  chatId        String? @db.ObjectId
+  userContactId String
+}
+
+model Chat {
   id       String    @id @default(auto()) @map("_id") @db.ObjectId
   messages Message[]
-  usersIds String[]
+  contacts Contact[]
 }
 
 model Message {
-  id             String        @id @default(auto()) @map("_id") @db.ObjectId
-  user           User?         @relation(fields: [userId], references: [id])
-  userId         String?       @db.ObjectId
-  sentAt         DateTime      @default(now())
-  content        String
-  conversation   Conversation? @relation(fields: [conversationId], references: [id])
-  conversationId String?       @db.ObjectId
+  id      String   @id @default(auto()) @map("_id") @db.ObjectId
+  user    User?    @relation(fields: [userId], references: [id])
+  userId  String?  @db.ObjectId
+  sentAt  DateTime @default(now())
+  Chat    Chat?    @relation(fields: [chatId], references: [id])
+  chatId  String?  @db.ObjectId
+  content String
+  read    Boolean  @default(false)
 }

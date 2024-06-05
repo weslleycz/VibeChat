@@ -140,46 +140,54 @@ export const ModalAddContact = ({ setContacts }: Props) => {
           </Box>
         </Modal>
       ) : (
-        <ActionSheet ref={ref}>
-          <div
-            style={{
-              height: 450,
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Box marginTop={4} p={2}>
-              <Box className={styles.container}>
-                <Box marginBottom={4}>
-                  <Typography variant="h5" gutterBottom>
-                    Insira o código de contato para adicionar.
-                  </Typography>
-                </Box>
+        <>
+          {open ? (
+            <ActionSheet ref={ref}>
+              <div
+                style={{
+                  height: 450,
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Box marginTop={4} p={2}>
+                  <Box className={styles.container}>
+                    <Box marginBottom={4}>
+                      <Typography variant="h5" gutterBottom>
+                        Insira o código de contato para adicionar.
+                      </Typography>
+                    </Box>
 
-                <Box justifyContent={"center"} display={"flex"}>
-                  <Box marginBottom={5}>
-                    <AuthCode
-                      inputClassName={styles["input-code"]}
-                      autoFocus
-                      length={6}
-                      onChange={handleChange}
-                      ref={AuthInputRef}
-                    />
-                    {error ? (
-                      <Alert sx={{ marginTop: 2 }} severity="error">
-                        Contato não encontrado.
-                      </Alert>
-                    ) : null}
+                    <Box justifyContent={"center"} display={"flex"}>
+                      <Box marginBottom={5}>
+                        <AuthCode
+                          inputClassName={styles["input-code"]}
+                          autoFocus
+                          length={6}
+                          onChange={handleChange}
+                          ref={AuthInputRef}
+                        />
+                        {error ? (
+                          <Alert sx={{ marginTop: 2 }} severity="error">
+                            Contato não encontrado.
+                          </Alert>
+                        ) : null}
+                      </Box>
+                    </Box>
+
+                    <Button
+                      onClick={handleSubmit}
+                      fullWidth
+                      variant="contained"
+                    >
+                      Adicionar
+                    </Button>
                   </Box>
                 </Box>
-
-                <Button onClick={handleSubmit} fullWidth variant="contained">
-                  Adicionar
-                </Button>
-              </Box>
-            </Box>
-          </div>
-        </ActionSheet>
+              </div>
+            </ActionSheet>
+          ) : null}
+        </>
       )}
     </>
   );

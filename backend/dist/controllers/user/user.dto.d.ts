@@ -22,6 +22,7 @@ export declare class UserListContacts implements UserListContactsOmit {
     code: string;
     contacts: string[];
     id: string;
+    chatId: string;
 }
 export declare class AddContactDTO {
     userId: string;

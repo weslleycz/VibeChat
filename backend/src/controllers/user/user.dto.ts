@@ -9,6 +9,7 @@ import {
 } from 'class-validator';
 import { plainToClass } from 'class-transformer';
 import { UserModel } from './user.model';
+import { Injectable } from '@nestjs/common';
 
 export class CreateUserDto {
   @ApiProperty({
@@ -97,6 +98,7 @@ export class UserListContacts implements UserListContactsOmit {
   contacts: string[];
   @ApiProperty()
   id: string;
+  chatId: string;
 }
 
 export class AddContactDTO {

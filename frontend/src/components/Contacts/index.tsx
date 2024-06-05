@@ -1,4 +1,3 @@
-import AddIcon from "@mui/icons-material/Add";
 import SearchIcon from "@mui/icons-material/Search";
 import {
   Box,
@@ -8,16 +7,21 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import { Virtuoso } from "react-virtuoso";
-import { Contact } from "../Contact";
 import { useEffect, useState } from "react";
-import { Cookies } from "../../services/cookies";
 import { decodeToken } from "react-jwt";
+import { Virtuoso } from "react-virtuoso";
 import { api } from "../../services/api";
+import { Cookies } from "../../services/cookies";
 import { IContact } from "../../types/IContact";
+import { Contact } from "../Contact";
 import { ModalAddContact } from "../ModalAddContact";
 
-export const Contacts = () => {
+type Props = {
+  setChatId: any;
+  setSelectContact: any;
+};
+
+export const Contacts = ({ setChatId, setSelectContact }: Props) => {
   const matches = useMediaQuery("(min-width:900px)");
   const [contacts, setContacts] = useState<IContact[]>([]);
   useEffect(() => {
@@ -75,7 +79,12 @@ export const Contacts = () => {
                 totalCount={contacts.length}
                 itemContent={(index) => (
                   <>
-                    <Contact key={index} {...contacts[index]} />
+                    <Contact
+                      setChatId={setChatId}
+                      contact={contacts[index]}
+                      setSelectContact={setSelectContact}
+                      key={index}
+                    />
                   </>
                 )}
               />
@@ -113,6 +122,22 @@ export const Contacts = () => {
                   ),
                 }}
                 placeholder="Buscar..."
+              />
+            </Box>
+            <Box marginTop={2}>
+              <Virtuoso
+                style={{ height: "500px" }}
+                totalCount={contacts.length}
+                itemContent={(index) => (
+                  <>
+                    <Contact
+                      setChatId={setChatId}
+                      contact={contacts[index]}
+                      setSelectContact={setSelectContact}
+                      key={index}
+                    />
+                  </>
+                )}
               />
             </Box>
           </Box>

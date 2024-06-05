@@ -11,21 +11,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserModel = void 0;
 const swagger_1 = require("@nestjs/swagger");
-class UserModel {
-}
+let UserModel = class UserModel {
+};
 exports.UserModel = UserModel;
-__decorate([
-    (0, swagger_1.ApiProperty)(),
-    __metadata("design:type", Array)
-], UserModel.prototype, "conversationIds", void 0);
-__decorate([
-    (0, swagger_1.ApiProperty)(),
-    __metadata("design:type", String)
-], UserModel.prototype, "code", void 0);
-__decorate([
-    (0, swagger_1.ApiProperty)(),
-    __metadata("design:type", Array)
-], UserModel.prototype, "contacts", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)(),
     __metadata("design:type", String)
@@ -42,4 +30,11 @@ __decorate([
     (0, swagger_1.ApiProperty)(),
     __metadata("design:type", String)
 ], UserModel.prototype, "password", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", String)
+], UserModel.prototype, "code", void 0);
+exports.UserModel = UserModel = __decorate([
+    (0, swagger_1.ApiExtraModels)()
+], UserModel);
 //# sourceMappingURL=user.model.js.map

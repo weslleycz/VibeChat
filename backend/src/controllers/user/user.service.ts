@@ -57,123 +57,128 @@ export class UserService {
 
   async getContacts(id: string) {
     try {
+      // Primeiro, obtemos o usuário e seus contatos
       const user = await this.prismaService.user.findUnique({
         where: {
           id,
         },
-      });
-
-      const contacts = await this.prismaService.user.findMany({
-        where: {
-          code: {
-            in: user.contacts.map((contain) => contain),
+        select: {
+          Contact: {
+            select: {
+              userContactId: true,
+              chatId: true,
+            },
           },
         },
-        select: {
-          name: true,
-          code: true,
-          messages: false,
-          contacts: false,
-          email: true,
-          id: true,
-          conversationIds: true,
-        },
-        orderBy: {
-          name: 'asc',
+      });
+
+      // Verificamos se o usuário foi encontrado
+      if (!user) {
+        throw new HttpException('Usuário não encontrado', 404);
+      }
+
+      // Extraímos os IDs de contato dos contatos do usuário
+      const contactIds = user.Contact.map((contact) => contact.userContactId);
+
+      // Buscamos os detalhes dos contatos usando os IDs
+      const contacts = await this.prismaService.user.findMany({
+        where: {
+          id: {
+            in: contactIds,
+          },
         },
       });
-      return contacts;
+
+      // Mapeamos os contatos para adicionar o chatId correspondente
+      const contactsWithChatId = contacts.map((contact) => {
+        const contactData = user.Contact.find(
+          (c) => c.userContactId === contact.id,
+        );
+        return {
+          ...contact,
+          chatId: contactData?.chatId,
+        };
+      });
+
+      return contactsWithChatId;
     } catch (error) {
       throw new HttpException('Usuário inválido', 400);
     }
   }
 
   async addContact({ codeContact, userId }: AddContactDTO) {
+    const user = await this.prismaService.user.findUnique({
+      where: {
+        id: userId,
+      },
+    });
     try {
-      const userData = await this.prismaService.user.findUnique({
-        where: {
-          id: userId,
-        },
-      });
-      const contactIndex = userData.contacts.indexOf(codeContact);
-      if (contactIndex === -1) {
-        const contact = await this.prismaService.user.findUnique({
+      if (user.code != codeContact) {
+        const friend = await this.prismaService.user.findUnique({
           where: {
             code: codeContact,
           },
         });
-        if (contact != null) {
-          const conversation = await this.prismaService.conversation.create({
-            data: {
-              usersIds: [userId, contact.id],
-            },
-          });
-          const user = await this.prismaService.user.update({
-            where: {
-              id: userId,
-            },
-            data: {
-              contacts: {
-                push: contact.code,
-              },
-              conversationIds: {
-                push: conversation.id,
+        await this.prismaService.chat.create({
+          data: {
+            contacts: {
+              createMany: {
+                data: [
+                  {
+                    userId: user.id,
+                    userContactId: friend.id,
+                  },
+                  {
+                    userId: friend.id,
+                    userContactId: user.id,
+                  },
+                ],
               },
             },
-          });
-          if (user != null) {
-            const contacts = await this.prismaService.user.findMany({
-              where: {
-                code: {
-                  in: user.contacts.map((contain) => contain),
-                },
-              },
-              select: {
-                name: true,
-                code: true,
-                messages: false,
-                contacts: false,
-                email: true,
-                id: true,
-                conversationIds: true,
-              },
-              orderBy: {
-                name: 'asc',
-              },
-            });
-            return contacts;
-          } else {
-            throw new HttpException('Usuário inválido', 400);
-          }
-        } else {
-          throw new HttpException('Usuário não encontrado', 404);
-        }
-      } else {
-        const userData = await this.prismaService.user.findUnique({
+          },
+        });
+
+        const userUpdate = await this.prismaService.user.findUnique({
           where: {
             id: userId,
           },
-        });
-        const contacts = await this.prismaService.user.findMany({
-          where: {
-            code: {
-              in: userData.contacts.map((contain) => contain),
+          select: {
+            Contact: {
+              select: {
+                userContactId: true,
+                chatId: true,
+              },
             },
           },
-          select: {
-            name: true,
-            code: true,
-            messages: false,
-            contacts: false,
-            email: true,
-            id: true,
-            conversationIds: true,
-          },
-          orderBy: {
-            name: 'asc',
+        });
+        // Extraímos os IDs de contato dos contatos do usuário
+        const contactIds = userUpdate.Contact.map(
+          (contact) => contact.userContactId,
+        );
+
+        // Buscamos os detalhes dos contatos usando os IDs
+        const contacts = await this.prismaService.user.findMany({
+          where: {
+            id: {
+              in: contactIds,
+            },
           },
         });
-        return contacts;
+
+        // Mapeamos os contatos para adicionar o chatId correspondente
+        const contactsWithChatId = contacts.map(async (contact) => {
+          const contactData = userUpdate.Contact.find(
+            (c) => c.userContactId === contact.id,
+          );
+          return {
+            ...contact,
+            chatId: contactData?.chatId,
+          };
+        });
+
+        return contactsWithChatId;
+      } else {
+        throw new HttpException('Usuário inválido', 400);
       }
     } catch (error) {
       throw new HttpException('Usuário inválido', 400);
@@ -182,28 +187,6 @@ export class UserService {
 
   async removeContact({ contactId, userId }: DeleteContactDTO) {
     try {
-      const user = await this.prismaService.user.findUnique({
-        where: {
-          id: userId,
-        },
-      });
-      const contactIndex = user.contacts.indexOf(contactId);
-      if (contactIndex !== -1) {
-        const contacts = user.contacts.splice(contactIndex, 1);
-        await this.prismaService.user.update({
-          where: {
-            id: userId,
-          },
-          data: {
-            contacts: {
-              set: contacts,
-            },
-          },
-        });
-        return 'Contato removido com sucesso.';
-      } else {
-        throw new HttpException('Contato não encontrado.', 404);
-      }
     } catch (error) {
       throw new HttpException('Usuário inválido', 400);
     }

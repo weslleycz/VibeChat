@@ -1,33 +1,40 @@
 import {
+  Avatar,
   List,
   ListItem,
   ListItemAvatar,
-  Avatar,
   ListItemText,
   Typography,
 } from "@mui/material";
 import { IContact } from "../../types/IContact";
-import { useEffect, useState } from "react";
 
-type Props = IContact;
+type Props = {
+  contact: IContact;
+  setChatId: any;
+  setSelectContact: any;
+};
 
-export const Contact = ({ name }: Props) => {
+export const Contact = ({ contact, setChatId, setSelectContact }: Props) => {
+  const handleSelectContact = (chatId: string, contactId: string) => {
+    setChatId(chatId);
+    setSelectContact(contactId);
+  };
   return (
     <>
       <List
         sx={{
           width: "100%",
+          cursor: "pointer",
         }}
+        onClick={() => handleSelectContact(contact.chatId, contact.id)}
       >
         <ListItem>
           <ListItemAvatar>
             <Avatar />
           </ListItemAvatar>
           <ListItemText>
-            <Typography variant="subtitle1">{name}</Typography>
-            <Typography variant="body2" color="textSecondary">
-              Hey, what's up?
-            </Typography>
+            <Typography variant="subtitle1">{contact.name}</Typography>
+            <Typography variant="body2" color="textSecondary"></Typography>
           </ListItemText>
         </ListItem>
       </List>

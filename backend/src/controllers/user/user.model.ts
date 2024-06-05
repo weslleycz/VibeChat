@@ -1,13 +1,9 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiExtraModels, ApiProperty } from '@nestjs/swagger';
 import { User as UserPrisma } from '@prisma/client';
 
+// @Injectable()
+@ApiExtraModels()
 export class UserModel implements UserPrisma {
-  @ApiProperty()
-  conversationIds: string[];
-  @ApiProperty()
-  code: string;
-  @ApiProperty()
-  contacts: string[];
   @ApiProperty()
   id: string;
   @ApiProperty()
@@ -16,4 +12,6 @@ export class UserModel implements UserPrisma {
   email: string;
   @ApiProperty()
   password: string;
+  @ApiProperty()
+  code: string;
 }
