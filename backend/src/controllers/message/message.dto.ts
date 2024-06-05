@@ -1,5 +1,5 @@
 import { ApiExtraModels, ApiProperty } from '@nestjs/swagger';
-import { IsString } from 'class-validator';
+import { IsString, IsNumber } from 'class-validator';
 
 @ApiExtraModels()
 export class MessageDTO {
@@ -14,4 +14,14 @@ export class MessageDTO {
   @ApiProperty()
   @IsString()
   content: string;
+}
+
+@ApiExtraModels()
+export class MessagesNotReadDTO {
+  @ApiProperty()
+  notRead: number;
+  @ApiProperty()
+  @IsString()
+  @IsNumber()
+  lastMessage: string;
 }

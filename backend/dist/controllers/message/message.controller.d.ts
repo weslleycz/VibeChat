@@ -17,4 +17,8 @@ export declare class MessageController {
         content: string;
         read: boolean;
     })[]>;
+    getMessagesNotRead(chatId: string, userId: string): Promise<{
+        notRead: number;
+        lastMessage: string;
+    }>;
 }

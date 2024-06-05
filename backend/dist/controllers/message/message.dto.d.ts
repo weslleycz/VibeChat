@@ -3,3 +3,7 @@ export declare class MessageDTO {
     chatId: string;
     content: string;
 }
+export declare class MessagesNotReadDTO {
+    notRead: number;
+    lastMessage: string;
+}

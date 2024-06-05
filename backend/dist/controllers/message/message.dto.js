@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.MessageDTO = void 0;
+exports.MessagesNotReadDTO = exports.MessageDTO = void 0;
 const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
 let MessageDTO = class MessageDTO {
@@ -33,4 +33,20 @@ __decorate([
 exports.MessageDTO = MessageDTO = __decorate([
     (0, swagger_1.ApiExtraModels)()
 ], MessageDTO);
+let MessagesNotReadDTO = class MessagesNotReadDTO {
+};
+exports.MessagesNotReadDTO = MessagesNotReadDTO;
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Number)
+], MessagesNotReadDTO.prototype, "notRead", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNumber)(),
+    __metadata("design:type", String)
+], MessagesNotReadDTO.prototype, "lastMessage", void 0);
+exports.MessagesNotReadDTO = MessagesNotReadDTO = __decorate([
+    (0, swagger_1.ApiExtraModels)()
+], MessagesNotReadDTO);
 //# sourceMappingURL=message.dto.js.map

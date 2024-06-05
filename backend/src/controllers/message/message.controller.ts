@@ -53,4 +53,15 @@ export class MessageController {
   async sendMessage(@Body() data: MessageDTO) {
     return await this.messageService.sendMessage(data);
   }
+
+  @Get('/getMessagesNotRead/:chatId/:userId')
+  @UseInterceptors(InterceptorJwt)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: '' })
+  async getMessagesNotRead(
+    @Param('chatId') chatId: string,
+    @Param('userId') userId: string,
+  ) {
+    return await this.messageService.getMessagesNotRead(chatId, userId);
+  }
 }

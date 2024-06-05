@@ -29,6 +29,9 @@ let MessageController = class MessageController {
     async sendMessage(data) {
         return await this.messageService.sendMessage(data);
     }
+    async getMessagesNotRead(chatId, userId) {
+        return await this.messageService.getMessagesNotRead(chatId, userId);
+    }
 };
 exports.MessageController = MessageController;
 __decorate([
@@ -65,6 +68,17 @@ __decorate([
     __metadata("design:paramtypes", [message_dto_1.MessageDTO]),
     __metadata("design:returntype", Promise)
 ], MessageController.prototype, "sendMessage", null);
+__decorate([
+    (0, common_1.Get)('/getMessagesNotRead/:chatId/:userId'),
+    (0, common_1.UseInterceptors)(middlewares_1.InterceptorJwt),
+    (0, swagger_1.ApiBearerAuth)(),
+    (0, swagger_1.ApiOperation)({ summary: '' }),
+    __param(0, (0, common_1.Param)('chatId')),
+    __param(1, (0, common_1.Param)('userId')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, String]),
+    __metadata("design:returntype", Promise)
+], MessageController.prototype, "getMessagesNotRead", null);
 exports.MessageController = MessageController = __decorate([
     (0, swagger_1.ApiTags)('Message'),
     (0, common_1.Controller)('message'),

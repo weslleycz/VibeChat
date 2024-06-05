@@ -29,4 +29,8 @@ export declare class MessageService {
         content: string;
         read: boolean;
     })[]>;
+    getMessagesNotRead(chatId: string, userId: string): Promise<{
+        notRead: number;
+        lastMessage: string;
+    }>;
 }

@@ -82,6 +82,36 @@ let MessageService = class MessageService {
             throw new common_1.HttpException('O chat não foi encontrado', 400);
         }
     }
+    async getMessagesNotRead(chatId, userId) {
+        try {
+            const chat = await this.prismaService.message.findMany({
+                where: {
+                    chatId: chatId,
+                    userId: userId,
+                    read: false,
+                },
+            });
+            const lastMessage = await this.prismaService.chat.findUnique({
+                where: {
+                    id: chatId,
+                },
+                select: {
+                    messages: {
+                        orderBy: {
+                            sentAt: 'desc',
+                        },
+                    },
+                },
+            });
+            return {
+                notRead: chat.length,
+                lastMessage: lastMessage.messages[0].content,
+            };
+        }
+        catch (error) {
+            throw new common_1.HttpException('O chat não foi encontrado', 400);
+        }
+    }
 };
 exports.MessageService = MessageService;
 exports.MessageService = MessageService = __decorate([

@@ -5,5 +5,4 @@ export type IContact = {
   email: string;
   id: string;
   chatId: string;
-  notRead: number;
 };
