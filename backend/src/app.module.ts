@@ -1,28 +1,28 @@
 import { MiddlewareConsumer, Module } from '@nestjs/common';
-import { AppService } from './app.service';
-import { PrismaService } from './services/prisma.service';
-import { UserController, UserService, UserModel } from './controllers/user';
 import { EventEmitterModule } from '@nestjs/event-emitter';
-import { BcryptService } from './services/bcrypt.service';
-import { RedisService } from './services/redis.service';
-import { JWTService } from './services/jwt.service';
-import { LogMiddleware } from './middlewares';
-import { ThrottlerModule } from '@nestjs/throttler';
-import { LoggerService } from './services/logger.service';
-import { ChatGateway } from './websocket/chat/chat.gateway';
+import { AppService } from './app.service';
 import { MessageController } from './controllers/message/message.controller';
 import { MessageService } from './controllers/message/message.service';
+import { UserController, UserModel, UserService } from './controllers/user';
+import { LogMiddleware } from './middlewares';
+import { BcryptService } from './services/bcrypt.service';
+import { JWTService } from './services/jwt.service';
+import { LoggerService } from './services/logger.service';
+import { PrismaService } from './services/prisma.service';
+import { RedisService } from './services/redis.service';
+import { ChatGateway } from './websocket/chat/chat.gateway';
+import { NotificationGateway } from './websocket/notification/notification.gateway';
 
 @Module({
   imports: [
     EventEmitterModule.forRoot(),
     UserModel,
-    ThrottlerModule.forRoot([
-      {
-        ttl: 60000,
-        limit: 100,
-      },
-    ]),
+    // ThrottlerModule.forRoot([
+    //   {
+    //     ttl: 60000,
+    //     limit: 100,
+    //   },
+    // ]),
   ],
   controllers: [UserController, MessageController],
   providers: [
@@ -35,6 +35,7 @@ import { MessageService } from './controllers/message/message.service';
     LoggerService,
     ChatGateway,
     MessageService,
+    NotificationGateway,
   ],
 })
 export class AppModule {

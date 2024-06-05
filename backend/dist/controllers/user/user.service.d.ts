@@ -2,11 +2,13 @@ import { AddContactDTO, CreateUserDto, DeleteContactDTO, UserLoginDto } from './
 import { PrismaService } from 'src/services/prisma.service';
 import { BcryptService } from 'src/services/bcrypt.service';
 import { JWTService } from 'src/services/jwt.service';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 export declare class UserService {
     private readonly prismaService;
     private readonly bcryptService;
     private readonly jwtservice;
-    constructor(prismaService: PrismaService, bcryptService: BcryptService, jwtservice: JWTService);
+    private readonly eventEmmit;
+    constructor(prismaService: PrismaService, bcryptService: BcryptService, jwtservice: JWTService, eventEmmit: EventEmitter2);
     create({ email, name, password }: CreateUserDto): Promise<object>;
     login({ email, password }: UserLoginDto): Promise<object>;
     getContacts(id: string): Promise<{

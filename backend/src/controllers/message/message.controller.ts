@@ -13,7 +13,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { InterceptorJwt } from 'src/middlewares';
-import { MessageDTO } from './message.dto';
+import { MessageDTO, MessagesNotReadDTO } from './message.dto';
 import { MessageModel } from './message.model';
 import { MessageService } from './message.service';
 
@@ -54,10 +54,32 @@ export class MessageController {
     return await this.messageService.sendMessage(data);
   }
 
+  @Get('/messagesRead/:chatId/:userId')
+  @UseInterceptors(InterceptorJwt)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Marca mensagens como lidas' })
+  @ApiResponse({
+    status: 200,
+    description: 'Mensagens foram marcadas como lidas.',
+  })
+  @ApiResponse({ status: 400, description: 'O chat não foi encontrado' })
+  async messagesRead(
+    @Param('chatId') chatId: string,
+    @Param('userId') userId: string,
+  ) {
+    await this.messageService.messagesRead(chatId, userId);
+  }
+
   @Get('/getMessagesNotRead/:chatId/:userId')
   @UseInterceptors(InterceptorJwt)
   @ApiBearerAuth()
-  @ApiOperation({ summary: '' })
+  @ApiOperation({ summary: 'Retorna as mensagens não lidas' })
+  @ApiResponse({
+    status: 200,
+    description: 'Retorna as mensagens não lidas',
+    type: MessagesNotReadDTO,
+  })
+  @ApiResponse({ status: 400, description: 'O chat não foi encontrado' })
   async getMessagesNotRead(
     @Param('chatId') chatId: string,
     @Param('userId') userId: string,

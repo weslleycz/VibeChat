@@ -1,7 +1,9 @@
-import { ReactNode, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { Display } from "../Display";
 import { Box, Grid, useMediaQuery } from "@mui/material";
 import { MenuMobile } from "../MenuMobile";
+import { Cookies } from "../../services/cookies";
+import { decodeToken } from "react-jwt";
 
 type Props = {
   children: ReactNode;
@@ -18,6 +20,16 @@ export const ContainerChat = ({
 }: Props) => {
   const [chatStatus, setChatStatus] = useState<StatusChat>("contatus");
   const matches = useMediaQuery("(min-width:900px)");
+  const [userId, setUserId] = useState("");
+  useEffect(()=>{
+    (async () => {
+      const { get } = new Cookies();
+      const tokenJWT = (await get()) as string;
+      const { data } = decodeToken(tokenJWT) as any;
+      setUserId(data);
+    })()
+
+  },[])
   return (
     <>
       {matches ? (
@@ -29,6 +41,7 @@ export const ContainerChat = ({
                 setChatStatus={setChatStatus}
                 chatStatus={chatStatus}
                 setSelectContact={setSelectContact}
+                userId={userId}
               />
             </Grid>
             <Grid item xs={9}>
@@ -45,6 +58,7 @@ export const ContainerChat = ({
             setChatStatus={setChatStatus}
             chatStatus={chatStatus}
             setSelectContact={setSelectContact}
+            userId={userId}
           />
           <MenuMobile setChatStatus={setChatStatus} chatStatus={chatStatus} />
         </>

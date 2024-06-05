@@ -73,9 +73,14 @@ let MessageService = class MessageService {
                             },
                         },
                     },
+                    contacts: true,
                 },
             });
+            const contacts = chat.contacts.find((contact) => {
+                return contact.userContactId !== userId;
+            });
             await this.eventEmmit.emit(chat.id);
+            await this.eventEmmit.emit(contacts.userContactId);
             return chat.messages;
         }
         catch (error) {
@@ -107,6 +112,23 @@ let MessageService = class MessageService {
                 notRead: chat.length,
                 lastMessage: lastMessage.messages[0].content,
             };
+        }
+        catch (error) {
+            throw new common_1.HttpException('O chat não foi encontrado', 400);
+        }
+    }
+    async messagesRead(chatId, userId) {
+        try {
+            const messages = await this.prismaService.message.updateMany({
+                where: {
+                    chatId: chatId,
+                    userId: userId,
+                },
+                data: {
+                    read: true,
+                },
+            });
+            await this.eventEmmit.emit(userId);
         }
         catch (error) {
             throw new common_1.HttpException('O chat não foi encontrado', 400);

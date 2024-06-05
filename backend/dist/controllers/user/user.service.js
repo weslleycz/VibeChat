@@ -15,11 +15,13 @@ const prisma_service_1 = require("../../services/prisma.service");
 const bcrypt_service_1 = require("../../services/bcrypt.service");
 const jwt_service_1 = require("../../services/jwt.service");
 const uuidv4_1 = require("uuidv4");
+const event_emitter_1 = require("@nestjs/event-emitter");
 let UserService = class UserService {
-    constructor(prismaService, bcryptService, jwtservice) {
+    constructor(prismaService, bcryptService, jwtservice, eventEmmit) {
         this.prismaService = prismaService;
         this.bcryptService = bcryptService;
         this.jwtservice = jwtservice;
+        this.eventEmmit = eventEmmit;
     }
     async create({ email, name, password }) {
         const existUser = await this.prismaService.user.findUnique({
@@ -158,6 +160,7 @@ let UserService = class UserService {
                         chatId: contactData?.chatId,
                     };
                 });
+                await this.eventEmmit.emit(userId);
                 return contactsWithChatId;
             }
             else {
@@ -181,6 +184,7 @@ exports.UserService = UserService = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [prisma_service_1.PrismaService,
         bcrypt_service_1.BcryptService,
-        jwt_service_1.JWTService])
+        jwt_service_1.JWTService,
+        event_emitter_1.EventEmitter2])
 ], UserService);
 //# sourceMappingURL=user.service.js.map

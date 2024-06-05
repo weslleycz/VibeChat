@@ -16,10 +16,11 @@ type Props = {
   contact: IContact;
   setChatId: any;
   setSelectContact: any;
+  contacts:IContact[]
 };
 
-export const Contact = ({ contact, setChatId, setSelectContact }: Props) => {
-  const [lastMessage, setLastMessage] = useState("fghghfgh");
+export const Contact = ({ contact, setChatId, setSelectContact,contacts }: Props) => {
+  const [lastMessage, setLastMessage] = useState("");
   const [notRead, setNotRead] = useState(0);
   useEffect(() => {
     (async () => {
@@ -33,11 +34,23 @@ export const Contact = ({ contact, setChatId, setSelectContact }: Props) => {
         console.log(error);
       }
     })();
-  }, []);
-  const handleSelectContact = (chatId: string, contactId: string) => {
-    setChatId(chatId);
-    setSelectContact(contactId);
+  }, [contacts]);
+
+  const handleMessagesRead = async () => {
+    try {
+      await api.get(`/message/messagesRead/${contact.chatId}/${contact.id}`);
+    } catch (error) {
+      console.log(error);
+    }
   };
+
+  const handleSelectContact = async (chatId: string, contactId: string) => {
+    setChatId(chatId);
+    setNotRead(0);
+    setSelectContact(contactId);
+    await handleMessagesRead();
+  };
+
   return (
     <>
       <List
@@ -54,7 +67,7 @@ export const Contact = ({ contact, setChatId, setSelectContact }: Props) => {
           <ListItemText>
             <Box justifyContent={"space-between"} display={"flex"}>
               <Typography variant="subtitle1">{contact.name}</Typography>
-              {notRead != 0 &&  <Chip color="primary" label={notRead} />}
+              {notRead != 0 && <Chip color="primary" label={notRead} />}
             </Box>
             <Typography variant="body2" color="textSecondary">
               {lastMessage.length > 16

@@ -15,28 +15,61 @@ import { Cookies } from "../../services/cookies";
 import { IContact } from "../../types/IContact";
 import { Contact } from "../Contact";
 import { ModalAddContact } from "../ModalAddContact";
+import { socket } from "../../services/socket";
 
 type Props = {
   setChatId: any;
   setSelectContact: any;
+  userId: string;
 };
 
-export const Contacts = ({ setChatId, setSelectContact }: Props) => {
+export const Contacts = ({ setChatId, setSelectContact, userId }: Props) => {
   const matches = useMediaQuery("(min-width:900px)");
   const [contacts, setContacts] = useState<IContact[]>([]);
+
+  const fetchContacts = async () => {
+    const { get } = new Cookies();
+    const tokenJWT = await get(); // Esperando a Promise diretamente
+    const { data } = decodeToken(tokenJWT) as any;
+    try {
+      const res = await api.get(`/user/getContacts/${data}`);
+      setContacts(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
-    (async () => {
-      const { get } = new Cookies();
-      const tokenJWT = (await get()) as string;
-      const { data } = decodeToken(tokenJWT) as any;
-      try {
-        const res = await api.get(`/user/getContacts/${data}`);
-        setContacts(res.data);
-      } catch (error) {
-        console.log(error);
-      }
-    })();
+    fetchContacts();
   }, []);
+
+  useEffect(() => {
+    const setSocketNotification = async () => {
+      const { get } = new Cookies();
+      const tokenJWT = await get();
+      const { data } = decodeToken(tokenJWT) as any;
+      socket.on(data, async () => {
+        const { get } = new Cookies();
+        const tokenJWT = await get(); // Esperando a Promise diretamente
+        const { data } = decodeToken(tokenJWT) as any;
+        try {
+          const res = await api.get(`/user/getContacts/${data}`);
+          setContacts(res.data);
+        } catch (error) {
+          console.log(error);
+        }
+      });
+      socket.emit(`notification`, {
+        userId: data,
+      });
+    };
+
+    setSocketNotification();
+
+    return () => {
+      socket.off("notification", (data: any) => {});
+    };
+  }, [socket]);
 
   return (
     <>
@@ -84,6 +117,7 @@ export const Contacts = ({ setChatId, setSelectContact }: Props) => {
                       contact={contacts[index]}
                       setSelectContact={setSelectContact}
                       key={index}
+                      contacts={contacts}
                     />
                   </>
                 )}
@@ -135,6 +169,7 @@ export const Contacts = ({ setChatId, setSelectContact }: Props) => {
                       contact={contacts[index]}
                       setSelectContact={setSelectContact}
                       key={index}
+                      contacts={contacts}
                     />
                   </>
                 )}

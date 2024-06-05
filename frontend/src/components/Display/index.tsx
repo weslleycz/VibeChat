@@ -9,6 +9,7 @@ type Prosp = {
   setChatStatus: any;
   setChatId: any;
   setSelectContact: any;
+  userId:string;
 };
 
 export const Display = ({
@@ -16,6 +17,7 @@ export const Display = ({
   setChatStatus,
   setChatId,
   setSelectContact,
+  userId
 }: Prosp) => {
   const matches = useMediaQuery("(min-width:900px)");
   return (
@@ -40,6 +42,7 @@ export const Display = ({
                 <Contacts
                   setSelectContact={setSelectContact}
                   setChatId={setChatId}
+                  userId={userId}
                 />
               ) : null}
             </Stack>
@@ -51,6 +54,7 @@ export const Display = ({
             <Contacts
               setSelectContact={setSelectContact}
               setChatId={setChatId}
+              userId={userId}
             />
           ) : null}
         </>

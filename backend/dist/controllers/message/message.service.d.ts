@@ -33,4 +33,5 @@ export declare class MessageService {
         notRead: number;
         lastMessage: string;
     }>;
+    messagesRead(chatId: string, userId: string): Promise<void>;
 }

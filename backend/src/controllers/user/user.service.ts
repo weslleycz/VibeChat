@@ -9,6 +9,7 @@ import { PrismaService } from 'src/services/prisma.service';
 import { BcryptService } from 'src/services/bcrypt.service';
 import { JWTService } from 'src/services/jwt.service';
 import { uuid } from 'uuidv4';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 
 @Injectable()
 export class UserService {
@@ -16,6 +17,7 @@ export class UserService {
     private readonly prismaService: PrismaService,
     private readonly bcryptService: BcryptService,
     private readonly jwtservice: JWTService,
+    private readonly eventEmmit: EventEmitter2,
   ) {}
   async create({ email, name, password }: CreateUserDto) {
     const existUser = await this.prismaService.user.findUnique({
@@ -175,6 +177,8 @@ export class UserService {
             chatId: contactData?.chatId,
           };
         });
+
+        await this.eventEmmit.emit(userId);
 
         return contactsWithChatId;
       } else {

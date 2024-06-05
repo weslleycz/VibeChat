@@ -8,19 +8,19 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
-const app_service_1 = require("./app.service");
-const prisma_service_1 = require("./services/prisma.service");
-const user_1 = require("./controllers/user");
 const event_emitter_1 = require("@nestjs/event-emitter");
-const bcrypt_service_1 = require("./services/bcrypt.service");
-const redis_service_1 = require("./services/redis.service");
-const jwt_service_1 = require("./services/jwt.service");
-const middlewares_1 = require("./middlewares");
-const throttler_1 = require("@nestjs/throttler");
-const logger_service_1 = require("./services/logger.service");
-const chat_gateway_1 = require("./websocket/chat/chat.gateway");
+const app_service_1 = require("./app.service");
 const message_controller_1 = require("./controllers/message/message.controller");
 const message_service_1 = require("./controllers/message/message.service");
+const user_1 = require("./controllers/user");
+const middlewares_1 = require("./middlewares");
+const bcrypt_service_1 = require("./services/bcrypt.service");
+const jwt_service_1 = require("./services/jwt.service");
+const logger_service_1 = require("./services/logger.service");
+const prisma_service_1 = require("./services/prisma.service");
+const redis_service_1 = require("./services/redis.service");
+const chat_gateway_1 = require("./websocket/chat/chat.gateway");
+const notification_gateway_1 = require("./websocket/notification/notification.gateway");
 let AppModule = class AppModule {
     configure(consumer) {
         consumer.apply(middlewares_1.LogMiddleware).forRoutes('*');
@@ -32,12 +32,6 @@ exports.AppModule = AppModule = __decorate([
         imports: [
             event_emitter_1.EventEmitterModule.forRoot(),
             user_1.UserModel,
-            throttler_1.ThrottlerModule.forRoot([
-                {
-                    ttl: 60000,
-                    limit: 100,
-                },
-            ]),
         ],
         controllers: [user_1.UserController, message_controller_1.MessageController],
         providers: [
@@ -50,6 +44,7 @@ exports.AppModule = AppModule = __decorate([
             logger_service_1.LoggerService,
             chat_gateway_1.ChatGateway,
             message_service_1.MessageService,
+            notification_gateway_1.NotificationGateway,
         ],
     })
 ], AppModule);
