@@ -8,11 +8,20 @@ export const Chat = () => {
   const [selectContact, setSelectContact] = useState("");
   return (
     <>
-      <ContainerChat setSelectContact={setSelectContact} setChatId={setChatId}>
+      <ContainerChat
+        chatId={chatId}
+        selectContact={selectContact}
+        setSelectContact={setSelectContact}
+        setChatId={setChatId}
+      >
         {chatId === "" ? (
           <MessageClosed />
         ) : (
-          <MessageOpen selectContact={selectContact} chatId={chatId} />
+          <MessageOpen
+            setChatId={setChatId}
+            selectContact={selectContact}
+            chatId={chatId}
+          />
         )}
       </ContainerChat>
     </>

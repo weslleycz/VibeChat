@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Post,
@@ -85,5 +86,24 @@ export class MessageController {
     @Param('userId') userId: string,
   ) {
     return await this.messageService.getMessagesNotRead(chatId, userId);
+  }
+
+  @Delete('/messageDelete/:userId/:messageId')
+  @UseInterceptors(InterceptorJwt)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Deletar mensagem' })
+  @ApiResponse({
+    status: 200,
+    description: 'Mensagem deletada com sucesso.',
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'O usuário ou a mensagem não foram encontrados.',
+  })
+  async messageDelete(
+    @Param('userId') userId: string,
+    @Param('messageId') messageId: string,
+  ) {
+    return await this.messageService.messageDelete(messageId, userId);
   }
 }

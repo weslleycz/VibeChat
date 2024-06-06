@@ -5,6 +5,7 @@ export type IMessage = {
   sentAt: Date;
   chatId: string;
   read: boolean;
+  retracted: boolean;
   user: {
     name: string;
   };

@@ -35,6 +35,9 @@ let MessageController = class MessageController {
     async getMessagesNotRead(chatId, userId) {
         return await this.messageService.getMessagesNotRead(chatId, userId);
     }
+    async messageDelete(userId, messageId) {
+        return await this.messageService.messageDelete(messageId, userId);
+    }
 };
 exports.MessageController = MessageController;
 __decorate([
@@ -104,6 +107,25 @@ __decorate([
     __metadata("design:paramtypes", [String, String]),
     __metadata("design:returntype", Promise)
 ], MessageController.prototype, "getMessagesNotRead", null);
+__decorate([
+    (0, common_1.Delete)('/messageDelete/:userId/:messageId'),
+    (0, common_1.UseInterceptors)(middlewares_1.InterceptorJwt),
+    (0, swagger_1.ApiBearerAuth)(),
+    (0, swagger_1.ApiOperation)({ summary: 'Deletar mensagem' }),
+    (0, swagger_1.ApiResponse)({
+        status: 200,
+        description: 'Mensagem deletada com sucesso.',
+    }),
+    (0, swagger_1.ApiResponse)({
+        status: 400,
+        description: 'O usuário ou a mensagem não foram encontrados.',
+    }),
+    __param(0, (0, common_1.Param)('userId')),
+    __param(1, (0, common_1.Param)('messageId')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, String]),
+    __metadata("design:returntype", Promise)
+], MessageController.prototype, "messageDelete", null);
 exports.MessageController = MessageController = __decorate([
     (0, swagger_1.ApiTags)('Message'),
     (0, common_1.Controller)('message'),

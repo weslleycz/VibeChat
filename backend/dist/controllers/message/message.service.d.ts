@@ -16,6 +16,7 @@ export declare class MessageService {
         chatId: string;
         content: string;
         read: boolean;
+        retracted: boolean;
     })[]>;
     sendMessage({ chatId, content, userId }: MessageDTO): Promise<({
         user: {
@@ -28,10 +29,12 @@ export declare class MessageService {
         chatId: string;
         content: string;
         read: boolean;
+        retracted: boolean;
     })[]>;
     getMessagesNotRead(chatId: string, userId: string): Promise<{
         notRead: number;
         lastMessage: string;
     }>;
     messagesRead(chatId: string, userId: string): Promise<void>;
+    messageDelete(messageId: string, userId: string): Promise<void>;
 }

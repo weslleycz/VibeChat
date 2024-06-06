@@ -3,6 +3,8 @@ import { Message as MessagePrisma } from '@prisma/client';
 
 export class MessageModel implements MessagePrisma {
   @ApiProperty()
+  retracted: boolean;
+  @ApiProperty()
   read: boolean;
   @ApiProperty()
   content: string;

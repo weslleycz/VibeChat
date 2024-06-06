@@ -1,6 +1,7 @@
 import { Box, Stack, useMediaQuery } from "@mui/material";
 import { Contacts } from "../Contacts";
 import { MenuPWA } from "../MenuPWA";
+import { MessageOpen } from "../MessageOpen";
 
 type StatusChat = "contatus" | "profile";
 
@@ -9,7 +10,9 @@ type Prosp = {
   setChatStatus: any;
   setChatId: any;
   setSelectContact: any;
-  userId:string;
+  userId: string;
+  selectContact: any;
+  chatId: any;
 };
 
 export const Display = ({
@@ -17,7 +20,9 @@ export const Display = ({
   setChatStatus,
   setChatId,
   setSelectContact,
-  userId
+  userId,
+  chatId,
+  selectContact,
 }: Prosp) => {
   const matches = useMediaQuery("(min-width:900px)");
   return (
@@ -51,11 +56,19 @@ export const Display = ({
       ) : (
         <>
           {chatStatus === "contatus" ? (
-            <Contacts
-              setSelectContact={setSelectContact}
-              setChatId={setChatId}
-              userId={userId}
-            />
+            <>
+              {chatId === "" ? (
+                <Contacts
+                  setSelectContact={setSelectContact}
+                  setChatId={setChatId}
+                  userId={userId}
+                />
+              ) : (
+                <MessageOpen
+                setChatId={setChatId}
+                 selectContact={selectContact} chatId={chatId} />
+              )}
+            </>
           ) : null}
         </>
       )}

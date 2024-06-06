@@ -17,6 +17,10 @@ exports.MessageModel = MessageModel;
 __decorate([
     (0, swagger_1.ApiProperty)(),
     __metadata("design:type", Boolean)
+], MessageModel.prototype, "retracted", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Boolean)
 ], MessageModel.prototype, "read", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)(),

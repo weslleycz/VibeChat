@@ -124,4 +124,32 @@ export class MessageService {
       throw new HttpException('O chat não foi encontrado', 400);
     }
   }
+
+  async messageDelete(messageId: string, userId: string) {
+    try {
+      const messages = await this.prismaService.message.findUnique({
+        where: {
+          id: messageId,
+        },
+      });
+      if (messages != null) {
+        if (messages.userId === userId) {
+          await this.prismaService.message.update({
+            where: {
+              id: messageId,
+            },
+            data: {
+              retracted: true,
+            },
+          });
+        } else {
+          throw new HttpException('Operação não autorizada', 401);
+        }
+      } else {
+        throw new HttpException('O chat não foi encontrado', 400);
+      }
+    } catch (error) {
+      throw new HttpException('O chat não foi encontrado', 400);
+    }
+  }
 }

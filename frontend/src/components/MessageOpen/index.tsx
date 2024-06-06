@@ -1,23 +1,27 @@
-import { Box } from "@mui/material";
-import { Fragment, useEffect, useRef, useState } from "react";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { Box, IconButton, Typography, useMediaQuery } from "@mui/material";
+import { Fragment, useEffect, useState } from "react";
+import { MessageBox } from "react-chat-elements";
+import "react-chat-elements/dist/main.css";
+import { decodeToken } from "react-jwt";
+import { Virtuoso } from "react-virtuoso";
 import { api } from "../../services/api";
+import { Cookies } from "../../services/cookies";
 import { socket } from "../../services/socket";
 import { IMessage } from "../../types/IMessage";
 import { SendMessage } from "../SendMessage";
-import "react-chat-elements/dist/main.css";
-import { MessageBox } from "react-chat-elements";
-import { Virtuoso } from "react-virtuoso";
-import { Cookies } from "../../services/cookies";
-import { decodeToken } from "react-jwt";
 
 type Props = {
   chatId: string;
   selectContact: string;
+  setChatId: any;
 };
 
-export const MessageOpen = ({ chatId }: Props) => {
+export const MessageOpen = ({ chatId, setChatId }: Props) => {
   const [messages, setMessages] = useState<IMessage[]>([]);
   const [userId, setUserId] = useState("");
+
+  const matches = useMediaQuery("(min-width:900px)");
 
   useEffect(() => {
     (async () => {
@@ -75,12 +79,50 @@ export const MessageOpen = ({ chatId }: Props) => {
     })();
   }, []);
 
+  const messageDelete = async (messageId: string) => {
+    try {
+      const { get } = new Cookies();
+      const tokenJWT = (await get()) as string;
+      const { data } = decodeToken(tokenJWT) as any;
+      await api.delete(`/message/messageDelete/${data}/${messageId}`);
+      await fetchMessage();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
+      {matches ? null : (
+        <Box
+          color={"#ffffff"}
+          bgcolor={"#1DD3C5"}
+          display={"flex"}
+          p={1}
+          alignItems="center"
+        >
+          <IconButton sx={{ color: "#ffffff" }} onClick={() => setChatId("")}>
+            <ArrowBackIcon />
+          </IconButton>
+          <Box
+            sx={{
+              flex: 1,
+              display: "flex",
+              justifyContent: "center",
+              position: "relative",
+            }}
+          >
+            <Typography sx={{ fontWeight: 900 }} variant="h6" gutterBottom>
+              Mensagem
+            </Typography>
+          </Box>
+        </Box>
+      )}
+
       <Box bgcolor={"#ffffff"} height={"100vh"} paddingBottom="64px">
         <Box p={2}>
           <Virtuoso
-            style={{ height: "85vh" }}
+            style={{ height: matches ? "85vh" : "77vh" }}
             totalCount={messages.length}
             initialTopMostItemIndex={messages.length - 1}
             followOutput={(isAtBottom) => (isAtBottom ? "smooth" : false)}
@@ -96,8 +138,11 @@ export const MessageOpen = ({ chatId }: Props) => {
                       title={messages[index].user.name}
                       text={messages[index].content}
                       date={new Date(messages[index].sentAt)}
-                      // retracted
-                      removeButton
+                      onRemoveMessageClick={() =>
+                        messageDelete(messages[index].id)
+                      }
+                      retracted={messages[index].retracted}
+                      removeButton={messages[index].userId === userId}
                       status={messages[index].read ? "read" : "sent"}
                       styles={{
                         background:

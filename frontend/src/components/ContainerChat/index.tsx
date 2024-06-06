@@ -9,6 +9,8 @@ type Props = {
   children: ReactNode;
   setChatId: any;
   setSelectContact: any;
+  selectContact: any;
+  chatId: any;
 };
 
 type StatusChat = "contatus" | "profile";
@@ -17,19 +19,20 @@ export const ContainerChat = ({
   children,
   setChatId,
   setSelectContact,
+  chatId,
+  selectContact,
 }: Props) => {
   const [chatStatus, setChatStatus] = useState<StatusChat>("contatus");
   const matches = useMediaQuery("(min-width:900px)");
   const [userId, setUserId] = useState("");
-  useEffect(()=>{
+  useEffect(() => {
     (async () => {
       const { get } = new Cookies();
       const tokenJWT = (await get()) as string;
       const { data } = decodeToken(tokenJWT) as any;
       setUserId(data);
-    })()
-
-  },[])
+    })();
+  }, []);
   return (
     <>
       {matches ? (
@@ -42,6 +45,8 @@ export const ContainerChat = ({
                 chatStatus={chatStatus}
                 setSelectContact={setSelectContact}
                 userId={userId}
+                chatId={chatId}
+                selectContact={selectContact}
               />
             </Grid>
             <Grid item xs={9}>
@@ -59,8 +64,12 @@ export const ContainerChat = ({
             chatStatus={chatStatus}
             setSelectContact={setSelectContact}
             userId={userId}
+            chatId={chatId}
+            selectContact={selectContact}
           />
-          <MenuMobile setChatStatus={setChatStatus} chatStatus={chatStatus} />
+          {chatId === "" ? (
+            <MenuMobile setChatStatus={setChatStatus} chatStatus={chatStatus} />
+          ) : null}
         </>
       )}
     </>

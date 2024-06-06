@@ -16,10 +16,12 @@ export declare class MessageController {
         chatId: string;
         content: string;
         read: boolean;
+        retracted: boolean;
     })[]>;
     messagesRead(chatId: string, userId: string): Promise<void>;
     getMessagesNotRead(chatId: string, userId: string): Promise<{
         notRead: number;
         lastMessage: string;
     }>;
+    messageDelete(userId: string, messageId: string): Promise<void>;
 }
