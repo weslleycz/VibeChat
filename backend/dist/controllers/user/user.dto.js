@@ -9,10 +9,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DeleteContactDTO = exports.AddContactDTO = exports.UserListContacts = exports.UserLoginResponseDto = exports.UserLoginDto = exports.CreateUserDto = void 0;
+exports.UploadAvatarDTO = exports.GetUseDTO = exports.DeleteContactDTO = exports.AddContactDTO = exports.UserListContacts = exports.UserLoginResponseDto = exports.UserLoginDto = exports.CreateUserDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
-const class_validator_1 = require("class-validator");
 const class_transformer_1 = require("class-transformer");
+const class_validator_1 = require("class-validator");
 class CreateUserDto {
     async validatePasswordConfirmation() {
         if (this.password !== this.confirmPassword) {
@@ -98,6 +98,10 @@ class UserListContacts {
 exports.UserListContacts = UserListContacts;
 __decorate([
     (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", String)
+], UserListContacts.prototype, "avatar", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
     __metadata("design:type", Array)
 ], UserListContacts.prototype, "conversationIds", void 0);
 __decorate([
@@ -150,4 +154,34 @@ __decorate([
     (0, swagger_1.ApiProperty)(),
     __metadata("design:type", String)
 ], DeleteContactDTO.prototype, "contactId", void 0);
+class GetUseDTO {
+}
+exports.GetUseDTO = GetUseDTO;
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", String)
+], GetUseDTO.prototype, "code", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", String)
+], GetUseDTO.prototype, "email", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", String)
+], GetUseDTO.prototype, "avatar", void 0);
+class UploadAvatarDTO {
+}
+exports.UploadAvatarDTO = UploadAvatarDTO;
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
+    __metadata("design:type", String)
+], UploadAvatarDTO.prototype, "avatar", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", String)
+], UploadAvatarDTO.prototype, "userId", void 0);
 //# sourceMappingURL=user.dto.js.map

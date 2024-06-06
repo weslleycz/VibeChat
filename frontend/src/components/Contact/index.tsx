@@ -16,12 +16,18 @@ type Props = {
   contact: IContact;
   setChatId: any;
   setSelectContact: any;
-  contacts:IContact[]
+  contacts: IContact[];
 };
 
-export const Contact = ({ contact, setChatId, setSelectContact,contacts }: Props) => {
+export const Contact = ({
+  contact,
+  setChatId,
+  setSelectContact,
+  contacts,
+}: Props) => {
   const [lastMessage, setLastMessage] = useState("");
   const [notRead, setNotRead] = useState(0);
+  const [avatar, setAvatar] = useState("");
   useEffect(() => {
     (async () => {
       try {
@@ -30,6 +36,7 @@ export const Contact = ({ contact, setChatId, setSelectContact,contacts }: Props
         );
         setLastMessage(res.data.lastMessage);
         setNotRead(res.data.notRead);
+        setAvatar(res.data.avatar)
       } catch (error) {
         console.log(error);
       }
@@ -62,7 +69,7 @@ export const Contact = ({ contact, setChatId, setSelectContact,contacts }: Props
       >
         <ListItem>
           <ListItemAvatar>
-            <Avatar />
+            <Avatar src={avatar} />
           </ListItemAvatar>
           <ListItemText>
             <Box justifyContent={"space-between"} display={"flex"}>

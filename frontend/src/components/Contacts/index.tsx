@@ -50,7 +50,7 @@ export const Contacts = ({ setChatId, setSelectContact, userId }: Props) => {
       const { data } = decodeToken(tokenJWT) as any;
       socket.on(data, async () => {
         const { get } = new Cookies();
-        const tokenJWT = await get(); // Esperando a Promise diretamente
+        const tokenJWT = await get(); 
         const { data } = decodeToken(tokenJWT) as any;
         try {
           const res = await api.get(`/user/getContacts/${data}`);

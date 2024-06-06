@@ -34,6 +34,7 @@ export declare class MessageService {
     getMessagesNotRead(chatId: string, userId: string): Promise<{
         notRead: number;
         lastMessage: string;
+        avatar: string;
     }>;
     messagesRead(chatId: string, userId: string): Promise<void>;
     messageDelete(messageId: string, userId: string): Promise<void>;

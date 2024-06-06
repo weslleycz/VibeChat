@@ -2,6 +2,9 @@
 include ':capacitor-android'
 project(':capacitor-android').projectDir = new File('../node_modules/@capacitor/android/capacitor')
 
+include ':capacitor-mlkit-barcode-scanning'
+project(':capacitor-mlkit-barcode-scanning').projectDir = new File('../node_modules/@capacitor-mlkit/barcode-scanning/android')
+
 include ':capacitor-app'
 project(':capacitor-app').projectDir = new File('../node_modules/@capacitor/app/android')
 
@@ -19,3 +22,6 @@ project(':capacitor-screen-orientation').projectDir = new File('../node_modules/
 
 include ':capacitor-status-bar'
 project(':capacitor-status-bar').projectDir = new File('../node_modules/@capacitor/status-bar/android')
+
+include ':capacitor-plugin-dynamsoft-barcode-reader'
+project(':capacitor-plugin-dynamsoft-barcode-reader').projectDir = new File('../node_modules/capacitor-plugin-dynamsoft-barcode-reader/android')

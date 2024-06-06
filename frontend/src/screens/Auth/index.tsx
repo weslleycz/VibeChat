@@ -27,7 +27,7 @@ export const Auth = () => {
   const history = useHistory();
 
   const matches = useMediaQuery("(min-width:900px)");
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(true);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleMouseDownPassword = (
     event: React.MouseEvent<HTMLButtonElement>

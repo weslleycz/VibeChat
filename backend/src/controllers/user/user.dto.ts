@@ -1,15 +1,14 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { plainToClass } from 'class-transformer';
 import {
+  IsEmail,
   IsNotEmpty,
   IsString,
   MinLength,
-  validate,
   ValidationError,
-  IsEmail,
+  validate,
 } from 'class-validator';
-import { plainToClass } from 'class-transformer';
 import { UserModel } from './user.model';
-import { Injectable } from '@nestjs/common';
 
 export class CreateUserDto {
   @ApiProperty({
@@ -87,6 +86,8 @@ export type UserListContactsOmit = Omit<UserModel, 'password'>;
 
 export class UserListContacts implements UserListContactsOmit {
   @ApiProperty()
+  avatar: string;
+  @ApiProperty()
   conversationIds: string[];
   @ApiProperty()
   name: string;
@@ -123,4 +124,26 @@ export class DeleteContactDTO {
   @IsNotEmpty()
   @ApiProperty()
   contactId: string;
+}
+
+export class GetUseDTO {
+  name: string;
+  @ApiProperty()
+  code: string;
+  @ApiProperty()
+  email: string;
+  @ApiProperty()
+  avatar: string;
+}
+
+export class UploadAvatarDTO {
+  @ApiProperty()
+  @IsString()
+  @IsNotEmpty()
+  avatar: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @ApiProperty()
+  userId: string;
 }

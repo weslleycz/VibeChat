@@ -1,4 +1,4 @@
-import { AddContactDTO, CreateUserDto, DeleteContactDTO, UserLoginDto } from './user.dto';
+import { AddContactDTO, CreateUserDto, DeleteContactDTO, UploadAvatarDTO, UserLoginDto } from './user.dto';
 import { PrismaService } from 'src/services/prisma.service';
 import { BcryptService } from 'src/services/bcrypt.service';
 import { JWTService } from 'src/services/jwt.service';
@@ -18,6 +18,7 @@ export declare class UserService {
         email: string;
         password: string;
         code: string;
+        avatar: string;
     }[]>;
     addContact({ codeContact, userId }: AddContactDTO): Promise<Promise<{
         chatId: string;
@@ -26,6 +27,14 @@ export declare class UserService {
         email: string;
         password: string;
         code: string;
+        avatar: string;
     }>[]>;
     removeContact({ contactId, userId }: DeleteContactDTO): Promise<void>;
+    getUser(id: string): Promise<{
+        email: string;
+        name: string;
+        code: string;
+        avatar: string;
+    }>;
+    uploadAvatar({ avatar, userId }: UploadAvatarDTO): Promise<void>;
 }

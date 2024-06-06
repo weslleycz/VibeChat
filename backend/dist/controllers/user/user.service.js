@@ -31,7 +31,7 @@ let UserService = class UserService {
         });
         if (existUser === null) {
             const hashPassword = await this.bcryptService.hashPassword(password);
-            const randomCode = (0, uuidv4_1.uuid)().substring(0, 6).toUpperCase();
+            const randomCode = (0, uuidv4_1.uuid)().substring(0, 5).toUpperCase();
             const user = await this.prismaService.user.create({
                 data: {
                     email: email,
@@ -173,6 +173,39 @@ let UserService = class UserService {
     }
     async removeContact({ contactId, userId }) {
         try {
+        }
+        catch (error) {
+            throw new common_1.HttpException('Usuário inválido', 400);
+        }
+    }
+    async getUser(id) {
+        try {
+            return await this.prismaService.user.findUnique({
+                where: {
+                    id,
+                },
+                select: {
+                    name: true,
+                    code: true,
+                    email: true,
+                    avatar: true,
+                },
+            });
+        }
+        catch (error) {
+            throw new common_1.HttpException('Usuário inválido', 400);
+        }
+    }
+    async uploadAvatar({ avatar, userId }) {
+        try {
+            await this.prismaService.user.update({
+                where: {
+                    id: userId,
+                },
+                data: {
+                    avatar: avatar,
+                },
+            });
         }
         catch (error) {
             throw new common_1.HttpException('Usuário inválido', 400);

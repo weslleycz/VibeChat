@@ -22,6 +22,7 @@ export declare class MessageController {
     getMessagesNotRead(chatId: string, userId: string): Promise<{
         notRead: number;
         lastMessage: string;
+        avatar: string;
     }>;
     messageDelete(userId: string, messageId: string): Promise<void>;
 }

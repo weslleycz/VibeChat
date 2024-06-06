@@ -16,6 +16,7 @@ export declare class UserLoginResponseDto {
 }
 export type UserListContactsOmit = Omit<UserModel, 'password'>;
 export declare class UserListContacts implements UserListContactsOmit {
+    avatar: string;
     conversationIds: string[];
     name: string;
     email: string;
@@ -31,4 +32,14 @@ export declare class AddContactDTO {
 export declare class DeleteContactDTO {
     userId: string;
     contactId: string;
+}
+export declare class GetUseDTO {
+    name: string;
+    code: string;
+    email: string;
+    avatar: string;
+}
+export declare class UploadAvatarDTO {
+    avatar: string;
+    userId: string;
 }

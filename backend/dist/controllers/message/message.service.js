@@ -108,9 +108,18 @@ let MessageService = class MessageService {
                     },
                 },
             });
+            const user = await this.prismaService.user.findUnique({
+                where: {
+                    id: userId,
+                },
+                select: {
+                    avatar: true,
+                },
+            });
             return {
                 notRead: chat.length,
                 lastMessage: lastMessage.messages[0].content,
+                avatar: user.avatar,
             };
         }
         catch (error) {

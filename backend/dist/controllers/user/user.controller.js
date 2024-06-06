@@ -37,6 +37,12 @@ let UserController = class UserController {
     async removeContact(userId, contactId) {
         return await this.userService.removeContact({ contactId, userId });
     }
+    async getUser(userId) {
+        return await this.userService.getUser(userId);
+    }
+    async uploadAvatar(data) {
+        return await this.userService.uploadAvatar(data);
+    }
 };
 exports.UserController = UserController;
 __decorate([
@@ -118,12 +124,40 @@ __decorate([
         status: 404,
         description: 'Contato não encontrado.',
     }),
+    (0, common_1.UseInterceptors)(middlewares_1.InterceptorJwt),
+    (0, swagger_1.ApiBearerAuth)(),
     __param(0, (0, common_1.Param)('userId')),
     __param(1, (0, common_1.Param)('contactId')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, String]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "removeContact", null);
+__decorate([
+    (0, swagger_1.ApiOperation)({ summary: 'Retorna o perfil do usuario.' }),
+    (0, common_1.UseInterceptors)(middlewares_1.InterceptorJwt),
+    (0, swagger_1.ApiBearerAuth)(),
+    (0, swagger_1.ApiResponse)({
+        status: 200,
+        description: 'Retorna o perfil do usuario.',
+        type: user_dto_1.GetUseDTO,
+    }),
+    (0, swagger_1.ApiResponse)({
+        status: 400,
+        description: 'Usuário inválido.',
+    }),
+    (0, common_1.Get)('/getUser/:userId'),
+    __param(0, (0, common_1.Param)('userId')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "getUser", null);
+__decorate([
+    (0, common_1.Put)('/uploadAvatar'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [user_dto_1.UploadAvatarDTO]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "uploadAvatar", null);
 exports.UserController = UserController = __decorate([
     (0, common_1.Controller)('user'),
     (0, swagger_1.ApiTags)('User'),

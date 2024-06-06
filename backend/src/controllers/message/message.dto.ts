@@ -19,9 +19,10 @@ export class MessageDTO {
 @ApiExtraModels()
 export class MessagesNotReadDTO {
   @ApiProperty()
+  @IsNumber()
   notRead: number;
+
   @ApiProperty()
   @IsString()
-  @IsNumber()
   lastMessage: string;
 }

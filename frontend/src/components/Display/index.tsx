@@ -2,6 +2,7 @@ import { Box, Stack, useMediaQuery } from "@mui/material";
 import { Contacts } from "../Contacts";
 import { MenuPWA } from "../MenuPWA";
 import { MessageOpen } from "../MessageOpen";
+import { Perfil } from "../Perfil";
 
 type StatusChat = "contatus" | "profile";
 
@@ -49,7 +50,7 @@ export const Display = ({
                   setChatId={setChatId}
                   userId={userId}
                 />
-              ) : null}
+              ) : <Perfil />}
             </Stack>
           </Box>
         </Box>
@@ -69,7 +70,7 @@ export const Display = ({
                  selectContact={selectContact} chatId={chatId} />
               )}
             </>
-          ) : null}
+          ) : <Perfil />}
         </>
       )}
     </>

@@ -978,6 +978,11 @@
     "@babel/helper-validator-identifier" "^7.24.6"
     to-fast-properties "^2.0.0"
 
+"@capacitor-mlkit/barcode-scanning@^6.1.0":
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/@capacitor-mlkit/barcode-scanning/-/barcode-scanning-6.1.0.tgz#cd5c6b51a96dedb30a87f10b12c04cf04ad7f9ed"
+  integrity sha512-jQWPv5AOprmomgDx2IMmOq1iV2J3xpSIN7oUL9nJzPB0iNhWLm0u5NP+MckRPvTVmyFCsDhZjXeAycRPW92suA==
+
 "@capacitor/android@6.0.0":
   version "6.0.0"
   resolved "https://registry.npmjs.org/@capacitor/android/-/android-6.0.0.tgz"
@@ -2692,6 +2697,14 @@ caniuse-lite@^1.0.30001587:
   resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001625.tgz"
   integrity sha512-4KE9N2gcRH+HQhpeiRZXd+1niLB/XNLAhSy4z7fI8EzcbcPoAqjNInxVHTiTwWfTIV4w096XG8OtCOCQQKPv3w==
 
+capacitor-plugin-dynamsoft-barcode-reader@^1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/capacitor-plugin-dynamsoft-barcode-reader/-/capacitor-plugin-dynamsoft-barcode-reader-1.5.0.tgz#ec2d4167eec4d01d51531109bbcce4504e3bba1e"
+  integrity sha512-HZjZeEOemMrsx4dcqGAUkLn9+nG03p+RlWdYnEUR7CG4N9YeJ4eIkgMJBhXWAMTAGg/UuE3+Njg343qvraP1Dg==
+  dependencies:
+    dynamsoft-camera-enhancer "3.3.5"
+    dynamsoft-javascript-barcode "9.6.21"
+
 caseless@~0.12.0:
   version "0.12.0"
   resolved "https://registry.npmjs.org/caseless/-/caseless-0.12.0.tgz"
@@ -2886,6 +2899,13 @@ convert-source-map@^2.0.0:
   version "2.0.0"
   resolved "https://registry.npmjs.org/convert-source-map/-/convert-source-map-2.0.0.tgz"
   integrity sha512-Kvp459HrV2FEJ1CAsi1Ku+MY3kasH19TFykTz2xWmMeq6bk2NU3XXvfJ+Q61m0xktWwt+1HSYf3JZsTms3aRJg==
+
+copy-to-clipboard@^3.3.3:
+  version "3.3.3"
+  resolved "https://registry.yarnpkg.com/copy-to-clipboard/-/copy-to-clipboard-3.3.3.tgz#55ac43a1db8ae639a4bd99511c148cdd1b83a1b0"
+  integrity sha512-2KV8NhB5JqC3ky0r9PMCAZKbUHSwtEo4CwCs0KXgruG43gX5PMqDEBbVU4OUzw2MuAWUfsuFmWvEKG5QRfSnJA==
+  dependencies:
+    toggle-selection "^1.0.6"
 
 core-js-compat@^3.31.0, core-js-compat@^3.36.1:
   version "3.37.1"
@@ -3140,6 +3160,16 @@ diff-sequences@^29.4.3, diff-sequences@^29.6.3:
   resolved "https://registry.npmjs.org/diff-sequences/-/diff-sequences-29.6.3.tgz"
   integrity sha512-EjePK1srD3P08o2j4f0ExnylqRs5B9tJjcp9t1krH2qRi8CCdsYfwe9JgSLurFBWwq4uOlipzfk5fHNvwFKr8Q==
 
+dm-fabric@^5.1.17:
+  version "5.1.17"
+  resolved "https://registry.yarnpkg.com/dm-fabric/-/dm-fabric-5.1.17.tgz#64d898470229765c8d23cb8b3fe2df0595749d0c"
+  integrity sha512-YouI4F+svfqTi3FM9fKG8ZqtdygzLbAzaA53QfekreLvJRqaHhCplk+2EF+cgMmuO5kY62m2Pm0pBqqV/sc5Vg==
+
+dm-howler@^2.2.4:
+  version "2.2.4"
+  resolved "https://registry.yarnpkg.com/dm-howler/-/dm-howler-2.2.4.tgz#29e10ed86f6eff16f85e116eb3f394e1e668a77a"
+  integrity sha512-h+iDEP/cyALeqWNtGdZZRwm3buSwaG26wzF6fCUGhvkF/yxYoWb8F/v7qN+urqdZw3wotZGO/01rDlzOxJUUGw==
+
 doctrine@^2.1.0:
   version "2.1.0"
   resolved "https://registry.npmjs.org/doctrine/-/doctrine-2.1.0.tgz"
@@ -3178,6 +3208,29 @@ dotenv@^16.4.5:
   version "16.4.5"
   resolved "https://registry.npmjs.org/dotenv/-/dotenv-16.4.5.tgz"
   integrity sha512-ZmdL2rui+eB2YwhsWzjInR8LldtZHGDoQ1ugH85ppHKwpUHL7j7rN0Ti9NCnGiQbhaZ11FpR+7ao1dNsmduNUg==
+
+dynamsoft-camera-enhancer@3.3.5:
+  version "3.3.5"
+  resolved "https://registry.yarnpkg.com/dynamsoft-camera-enhancer/-/dynamsoft-camera-enhancer-3.3.5.tgz#de16cbb3c76a3236a6ca27ed216574b7c73f82af"
+  integrity sha512-R9iRb9KYrxyuLxcAwrW9Dkhul9XoBQVI7NQYw4/I6B+racxGJjhVFD/l/b1gJ8gQmzoU5AQ3gqMBZGxMPl6G3g==
+  dependencies:
+    dm-fabric "^5.1.17"
+    mutable-promise "^1.1.13"
+
+dynamsoft-camera-enhancer@^3.3.5:
+  version "3.3.10"
+  resolved "https://registry.yarnpkg.com/dynamsoft-camera-enhancer/-/dynamsoft-camera-enhancer-3.3.10.tgz#2dfb27f2aa7e24ff500fa9e98b5d7362c0721655"
+  integrity sha512-end8agwVRIpPF+Ixz4Kb5wY8Nn7Qq7XIa+mtysB/X1GubXm/2Vjh1YFiqA3XSPDhy65yYtqX0OA1G9vg7phfOg==
+  dependencies:
+    dm-fabric "^5.1.17"
+
+dynamsoft-javascript-barcode@9.6.21:
+  version "9.6.21"
+  resolved "https://registry.yarnpkg.com/dynamsoft-javascript-barcode/-/dynamsoft-javascript-barcode-9.6.21.tgz#d46876c11f9f35db6a72056368bb944ff2624626"
+  integrity sha512-b4GsfsTTTVLyqeUtek7wimgMcdi9OjLC8N2K30Z6JwFwGMMvvBfvGmvkOKvMWY/yzxOISX+4coUp/0TUEyadXw==
+  dependencies:
+    dm-howler "^2.2.4"
+    dynamsoft-camera-enhancer "^3.3.5"
 
 ecc-jsbn@~0.1.1:
   version "0.1.2"
@@ -4889,6 +4942,11 @@ ms@2.1.2, ms@^2.1.1:
   resolved "https://registry.npmjs.org/ms/-/ms-2.1.2.tgz"
   integrity sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==
 
+mutable-promise@^1.1.13:
+  version "1.1.13"
+  resolved "https://registry.yarnpkg.com/mutable-promise/-/mutable-promise-1.1.13.tgz#50b303fdaed1a51c1a33853ab2be510e41c197e7"
+  integrity sha512-2NzvKW97ZG2C7Z6H80+fWD/0kG5FOycAptsplCoyx5rrjA8Ix5b9PgqDHxecgQFCm+646uZpt71rQLRrBkL3JA==
+
 nanoid@^3.3.7:
   version "3.3.7"
   resolved "https://registry.npmjs.org/nanoid/-/nanoid-3.3.7.tgz"
@@ -5298,6 +5356,11 @@ punycode@^2.1.0, punycode@^2.1.1, punycode@^2.3.0:
   resolved "https://registry.npmjs.org/punycode/-/punycode-2.3.1.tgz"
   integrity sha512-vYt7UD1U9Wg6138shLtLOvdAu+8DsC/ilFtEVHcH+wydcSpNE20AfSOduf6MkRFahL5FY7X1oU7nKVZFtfq8Fg==
 
+qr.js@0.0.0:
+  version "0.0.0"
+  resolved "https://registry.yarnpkg.com/qr.js/-/qr.js-0.0.0.tgz#cace86386f59a0db8050fa90d9b6b0e88a1e364f"
+  integrity sha512-c4iYnWb+k2E+vYpRimHqSu575b1/wKl4XFeJGpFmrJQz5I88v9aY2czh7s0w36srfCM1sXgC/xpoJz5dJfq+OQ==
+
 qs@6.10.4:
   version "6.10.4"
   resolved "https://registry.npmjs.org/qs/-/qs-6.10.4.tgz"
@@ -5372,6 +5435,14 @@ react-jwt@^1.2.1:
   integrity sha512-lmDY2vwYw/wMWtrOvk3lJPvY882fpAwWQjdkXgE/uyDUjoo2Tr1SQE2xTl3j4uE7NvJiqZRh3V9JZAMqB7/joQ==
   optionalDependencies:
     fsevents "^2.3.2"
+
+react-qr-code@^2.0.14:
+  version "2.0.14"
+  resolved "https://registry.yarnpkg.com/react-qr-code/-/react-qr-code-2.0.14.tgz#bdba0bb358731fc6de43f8581273444912ac3da1"
+  integrity sha512-xvAUqmXzFzf7X6aQAAKb6T02YYk9grBBFeqpp1MiVhUAKG3Rg9+hFiOKRYg4+rWc2MiXNxkri0ulAJgS12xh7Q==
+  dependencies:
+    prop-types "^15.8.1"
+    qr.js "0.0.0"
 
 react-refresh@^0.14.2:
   version "0.14.2"
@@ -6174,6 +6245,11 @@ to-regex-range@^5.0.1:
   integrity sha512-65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ==
   dependencies:
     is-number "^7.0.0"
+
+toggle-selection@^1.0.6:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/toggle-selection/-/toggle-selection-1.0.6.tgz#6e45b1263f2017fa0acc7d89d78b15b8bf77da32"
+  integrity sha512-BiZS+C1OS8g/q2RRbJmy59xpyghNBqrr6k5L/uKBGRsTfxmu3ffiRnd8mlGPUVayg8pvfi5urfnu8TU7DVOkLQ==
 
 tough-cookie@^4.1.2, tough-cookie@^4.1.3:
   version "4.1.4"

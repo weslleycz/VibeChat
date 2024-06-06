@@ -17,6 +17,8 @@ import {
 import {
   AddContactDTO,
   CreateUserDto,
+  GetUseDTO,
+  UploadAvatarDTO,
   UserListContacts,
   UserLoginDto,
   UserLoginResponseDto,
@@ -99,10 +101,34 @@ export class UserController {
     status: 404,
     description: 'Contato não encontrado.',
   })
+  @UseInterceptors(InterceptorJwt)
+  @ApiBearerAuth()
   async removeContact(
     @Param('userId') userId: string,
     @Param('contactId') contactId: string,
   ) {
     return await this.userService.removeContact({ contactId, userId });
+  }
+
+  @ApiOperation({ summary: 'Retorna o perfil do usuario.' })
+  @UseInterceptors(InterceptorJwt)
+  @ApiBearerAuth()
+  @ApiResponse({
+    status: 200,
+    description: 'Retorna o perfil do usuario.',
+    type: GetUseDTO,
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Usuário inválido.',
+  })
+  @Get('/getUser/:userId')
+  async getUser(@Param('userId') userId: string) {
+    return await this.userService.getUser(userId);
+  }
+
+  @Put('/uploadAvatar')
+  async uploadAvatar(@Body() data: UploadAvatarDTO) {
+    return await this.userService.uploadAvatar(data);
   }
 }

@@ -3,6 +3,7 @@ import {
   AddContactDTO,
   CreateUserDto,
   DeleteContactDTO,
+  UploadAvatarDTO,
   UserLoginDto,
 } from './user.dto';
 import { PrismaService } from 'src/services/prisma.service';
@@ -27,7 +28,7 @@ export class UserService {
     });
     if (existUser === null) {
       const hashPassword = await this.bcryptService.hashPassword(password);
-      const randomCode = uuid().substring(0, 6).toUpperCase();
+      const randomCode = uuid().substring(0, 5).toUpperCase();
       const user = await this.prismaService.user.create({
         data: {
           email: email,
@@ -191,6 +192,39 @@ export class UserService {
 
   async removeContact({ contactId, userId }: DeleteContactDTO) {
     try {
+    } catch (error) {
+      throw new HttpException('Usuário inválido', 400);
+    }
+  }
+
+  async getUser(id: string) {
+    try {
+      return await this.prismaService.user.findUnique({
+        where: {
+          id,
+        },
+        select: {
+          name: true,
+          code: true,
+          email: true,
+          avatar: true,
+        },
+      });
+    } catch (error) {
+      throw new HttpException('Usuário inválido', 400);
+    }
+  }
+
+  async uploadAvatar({ avatar, userId }: UploadAvatarDTO) {
+    try {
+      await this.prismaService.user.update({
+        where: {
+          id: userId,
+        },
+        data: {
+          avatar: avatar,
+        },
+      });
     } catch (error) {
       throw new HttpException('Usuário inválido', 400);
     }

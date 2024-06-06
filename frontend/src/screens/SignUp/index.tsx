@@ -38,8 +38,8 @@ export const SignUp = () => {
 
   const matches = useMediaQuery("(min-width:900px)");
 
-  const [showPassword, setShowPassword] = useState(false);
-  const [showPasswordConfirme, setShowPasswordConfirme] = useState(false);
+  const [showPassword, setShowPassword] = useState(true);
+  const [showPasswordConfirme, setShowPasswordConfirme] = useState(true);
 
   const handleClickShowPasswordConfirme = () =>
     setShowPasswordConfirme((show) => !show);

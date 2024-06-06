@@ -38,12 +38,12 @@ let MessagesNotReadDTO = class MessagesNotReadDTO {
 exports.MessagesNotReadDTO = MessagesNotReadDTO;
 __decorate([
     (0, swagger_1.ApiProperty)(),
+    (0, class_validator_1.IsNumber)(),
     __metadata("design:type", Number)
 ], MessagesNotReadDTO.prototype, "notRead", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)(),
     (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsNumber)(),
     __metadata("design:type", String)
 ], MessagesNotReadDTO.prototype, "lastMessage", void 0);
 exports.MessagesNotReadDTO = MessagesNotReadDTO = __decorate([
