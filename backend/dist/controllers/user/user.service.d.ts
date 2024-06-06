@@ -31,8 +31,8 @@ export declare class UserService {
     }>[]>;
     removeContact({ contactId, userId }: DeleteContactDTO): Promise<void>;
     getUser(id: string): Promise<{
-        email: string;
         name: string;
+        email: string;
         code: string;
         avatar: string;
     }>;
